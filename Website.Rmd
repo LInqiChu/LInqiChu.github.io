@@ -1,0 +1,50 @@
+---
+title: "Website"
+output: github_document
+date: "2025-10-24"
+---
+
+```{r}
+library(tidyverse)
+library(rvest)
+library(httr)
+
+```
+
+## 
+
+
+```{r}
+url = "http://samhda.s3-us-gov-west-1.amazonaws.com/s3fs-public/field-uploads/2k15StateFiles/NSDUHsaeShortTermCHG2015.htm"
+drug_use_html = read_html(url)
+
+drug_use_html
+
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r}
+
+
+
+
+
+```
+
+
+
+
+
+```{r}
+
+
+
+
+
+
+
+```
+
