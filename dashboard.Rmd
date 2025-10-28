@@ -20,7 +20,68 @@ library(p8105.datasets)
 data("instacart")
 ```
 
-
+```{r}
+# Preprocess the dataset
+instacart_df = 
+  instacart |>
+  janitor::clean_names() |> 
+  
+  # handle missing values
+  mutate(
+    across(where(is.character), ~na_if(., ".")),
+    across(where(is.character), ~na_if(., "NA")),
+    across(where(is.character), ~na_if(., ""))
+    ) |>
+  
+  # create derived variables
+  mutate(
+    # order time categories
+    order_hour_category = case_when(
+      order_hour_of_day >= 6 & order_hour_of_day < 12 ~ "Morning (6-12)",
+      order_hour_of_day >= 12 & order_hour_of_day < 18 ~ "Afternoon (12-18)",
+      order_hour_of_day >= 18 & order_hour_of_day < 22 ~ "Evening (18-22)",
+      TRUE ~ "Night (22-6)"
+    ),
+    # Day of week names
+    order_day_name = case_when(
+      order_dow == 0 ~ "Sunday",
+      order_dow == 1 ~ "Monday",
+      order_dow == 2 ~ "Tuesday",
+      order_dow == 3 ~ "Wednesday",
+      order_dow == 4 ~ "Thursday",
+      order_dow == 5 ~ "Friday",
+      order_dow == 6 ~ "Saturday"
+    ),
+    # Weekend indicator
+    is_weekend = if_else(order_dow %in% c(0, 6), "Weekend", "Weekday"),
+    # Simplified department categories
+    dept_category = case_when(
+      department %in% c("produce", "dairy eggs") ~ "Fresh Foods",
+      department %in% c("snacks", "frozen", "ice cream ice") ~ "Snacks & Frozen",
+      department %in% c("bakery", "deli", "meat seafood") ~ "Bakery & Deli",
+      department %in% c("beverages", "alcohol") ~ "Beverages",
+      department %in% c("pantry", "dry goods pasta", "canned goods") ~ "Pantry Staples",
+      TRUE ~ "Other"
+    ),
+    # change reorder type
+    is_reordered = as.logical(reordered)
+  ) |>
+  
+    select(
+    # IDs
+    order_id, product_id, user_id,
+    # Product information
+    product_name, aisle, department, dept_category,
+    # Order timing
+    order_hour_of_day, order_hour_category,
+    order_dow, order_day_name, is_weekend,
+    # Order characteristics
+    order_number, add_to_cart_order,
+    days_since_prior_order,
+    # Reorder behavior
+    reordered, is_reordered
+  )
+```
 
 
 Column {data-width=650}
