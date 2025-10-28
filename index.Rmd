@@ -25,5 +25,5 @@ Let's connect: chulinqi42@gmail.com
 
 Click on the link to learn more about me!
 
-[About me](about.html)
+[About](About_me.html)
 
