@@ -87,11 +87,46 @@ instacart_df =
 Column {data-width=650}
 -----------------------------------------------------------------------
 
-### Chart A
+
+
+条形图 (Bar Plot)
+
+最受欢迎的产品: Top20最常购买的商品
+最受欢迎的通道(aisle)或部门:按订单数量排序
+
+散点图 (Scatter Plot)
+
+订购时间 vs部门:X轴为订购小时，Y轴为部门，点的大小表示订单数量
+订购时间 vs重新订购率:探索一天中不同时间段的重新订购行为
+
+
+
+折线图 (Line Plot)
+
+一天24小时的订单趋势: 展示购物高峰时段
+一周七天的订单模式: 周一到周日的变化
+
+
+
+### Top 20 Most Popular Products
 
 ```{r}
+top20_products =
+  instacart_df |>
+  count(product_name, sort = TRUE) |>
+  slice_head(n = 20) |>
+  mutate(
+     product_name = fct_reorder(product_name, n)
+     ) |>
+  plot_ly(x = ~n, y = ~product_name, type = "bar", colors = "viridis")
 
 ```
+
+
+
+
+
+
 
 Column {data-width=350}
 -----------------------------------------------------------------------
