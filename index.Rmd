@@ -1,27 +1,31 @@
 ---
-title: "My awesome website"
+title: "Linqi Chu's website"
 output: 
   html_document:
     toc: true
     toc_float: true
-    theme: cerulean
+    theme: flatly
 ---
 
-# This is Linqi Chu's awesome website
+# Welcome to my website!
+
+![](picture.jpg)
 
 
-![](https://media.giphy.com/media/drXGoW1iudhKw/giphy.gif)
+# Introduction
+Hi, I'm Linqi Chu! I'm a first-year Master's student in Biostatistics (Data Science Track) at Columbia University, with a strong foundation in statistical modeling, machine learning, and causal inference.
 
+I love working at the intersection of statistics and technology — whether it's applying causal discovery algorithms to Alzheimer's research, building LSTM models for weather prediction, or conducting A/B tests to optimize user experiences. My technical toolkit includes Python, R, SQL, and frameworks like TensorFlow, alongside expertise in experimental design and causal inference methods.
 
-# Here is a subsection
+Currently, I'm exploring advanced topics in deep learning and AI agent while seeking opportunities to apply my skills in impactful, data-driven projects.
 
-And here is some addition text 
-
-
+Let's connect: chulinqi42@gmail.com
 
 
 
 # Link to page within the site
+
+Click on the link to learn more about me!
 
 [About me](about.html)
 
