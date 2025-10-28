@@ -7,7 +7,13 @@ output:
     theme: flatly
 ---
 
-# This page has information about me
+I'm a **biostatistics graduate student** at Columbia University specializing in **causal inference, experimental design, and machine learning applications**.
 
-I am a first-year graduate student majoring in Biostatistics.
+My work spans:<br>
+**Statistical methodology**: A/B testing, causal discovery, Bayesian inference<br>
+**Applied ML**: Time series forecasting, classification models, deep learning<br>
+**Data infrastructure**: Pipeline automation, dashboard design, reproducible workflows
 
+I'm particularly interested in applying rigorous statistical methods to healthcare and product analytics challenges.
+
+**Looking ahead**: I'm excited about roles in experimentation, causal inference, or data science where I can combine statistical thinking with hands-on problem-solving!
