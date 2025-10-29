@@ -1,10 +1,10 @@
 ---
-title: "My_Plotly_dashboard"
+title: "Dashboard"
 output:
   flexdashboard::flex_dashboard:
     orientation: columns
     vertical_layout: fill
-    theme: darkly
+    source: embed
 ---
 
 ```{r setup, include=FALSE}
@@ -15,12 +15,12 @@ library(p8105.datasets)
 ```
 
 
-```{r echo=FALSE, warning=FALSE, message=FALSE}
+```{r}
 # Import data
 data("instacart")
 ```
 
-```{r echo=FALSE, warning=FALSE, message=FALSE}
+```{r}
 # Preprocess the dataset
 instacart_df = 
   instacart |>
@@ -84,12 +84,12 @@ instacart_df =
 ```
 
 
-Column {data-width=650}
+Column {data-width=450}
 -----------------------------------------------------------------------
 
 ### Top 20 Most Popular Products
 
-```{r echo=FALSE, warning=FALSE, message=FALSE}
+```{r}
 top20_products =
   instacart_df |>
   count(product_name, sort = TRUE) |>
@@ -139,12 +139,9 @@ top20_products
 ```
 
 
-Column {data-width=350}
------------------------------------------------------------------------
-
 ### Order Time vs Department
 
-```{r echo=FALSE, warning=FALSE, message=FALSE}
+```{r}
 time_dept_data =
   instacart_df |>
   count(order_hour_of_day, department) |>
@@ -164,7 +161,7 @@ scatterplot1 =
     type = "scatter",
     mode = "markers",
     size = ~ n,
-    sizes = c(10, 500),
+    sizes = c(10, 400),
     marker = list(
       opacity = 0.7
     ),
@@ -199,9 +196,13 @@ scatterplot1 =
 scatterplot1
 ```
 
+
+Column {data-width=450}
+-----------------------------------------------------------------------
+
 ### 24-Hour Order Trend on Instacart
 
-```{r echo=FALSE, warning=FALSE, message=FALSE}
+```{r}
 hourly_orders =
   instacart_df |>
   count(order_hour_of_day) |>
@@ -282,7 +283,7 @@ hourly_orders
 
 ### Weekly Order Pattern on Instacart
 
-```{r echo=FALSE, warning=FALSE, message=FALSE}
+```{r}
 weekly_orders =
   instacart_df |>
   count(order_day_name) |>
@@ -340,7 +341,7 @@ weekly_orders =
     hovermode = "x unified"
   )
 
-weekly_orders
+weekly_orders 
 ```
 
 
