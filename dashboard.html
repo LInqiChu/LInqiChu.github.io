@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>My_Plotly_dashboard</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.11.0/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="mailto:you@youremail.com">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="http://github.com/LInqiChu">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">My_Plotly_dashboard</h1>
+
+</div>
+
+
+<pre class="r"><code># Import data
+data(&quot;instacart&quot;)</code></pre>
+<pre class="r"><code># Preprocess the dataset
+instacart_df = 
+  instacart |&gt;
+  janitor::clean_names() |&gt; 
+  
+  # handle missing values
+  mutate(
+    across(where(is.character), ~na_if(., &quot;.&quot;)),
+    across(where(is.character), ~na_if(., &quot;NA&quot;)),
+    across(where(is.character), ~na_if(., &quot;&quot;))
+    ) |&gt;
+  
+  # create derived variables
+  mutate(
+    # order time categories
+    order_hour_category = case_when(
+      order_hour_of_day &gt;= 6 &amp; order_hour_of_day &lt; 12 ~ &quot;Morning (6-12)&quot;,
+      order_hour_of_day &gt;= 12 &amp; order_hour_of_day &lt; 18 ~ &quot;Afternoon (12-18)&quot;,
+      order_hour_of_day &gt;= 18 &amp; order_hour_of_day &lt; 22 ~ &quot;Evening (18-22)&quot;,
+      TRUE ~ &quot;Night (22-6)&quot;
+    ),
+    # Day of week names
+    order_day_name = case_when(
+      order_dow == 0 ~ &quot;Sunday&quot;,
+      order_dow == 1 ~ &quot;Monday&quot;,
+      order_dow == 2 ~ &quot;Tuesday&quot;,
+      order_dow == 3 ~ &quot;Wednesday&quot;,
+      order_dow == 4 ~ &quot;Thursday&quot;,
+      order_dow == 5 ~ &quot;Friday&quot;,
+      order_dow == 6 ~ &quot;Saturday&quot;
+    ),
+    # Weekend indicator
+    is_weekend = if_else(order_dow %in% c(0, 6), &quot;Weekend&quot;, &quot;Weekday&quot;),
+    # Simplified department categories
+    dept_category = case_when(
+      department %in% c(&quot;produce&quot;, &quot;dairy eggs&quot;) ~ &quot;Fresh Foods&quot;,
+      department %in% c(&quot;snacks&quot;, &quot;frozen&quot;, &quot;ice cream ice&quot;) ~ &quot;Snacks &amp; Frozen&quot;,
+      department %in% c(&quot;bakery&quot;, &quot;deli&quot;, &quot;meat seafood&quot;) ~ &quot;Bakery &amp; Deli&quot;,
+      department %in% c(&quot;beverages&quot;, &quot;alcohol&quot;) ~ &quot;Beverages&quot;,
+      department %in% c(&quot;pantry&quot;, &quot;dry goods pasta&quot;, &quot;canned goods&quot;) ~ &quot;Pantry Staples&quot;,
+      TRUE ~ &quot;Other&quot;
+    ),
+    # change reorder type
+    is_reordered = as.logical(reordered)
+  ) |&gt;
+  
+    select(
+    # IDs
+    order_id, product_id, user_id,
+    # Product information
+    product_name, aisle, department, dept_category,
+    # Order timing
+    order_hour_of_day, order_hour_category,
+    order_dow, order_day_name, is_weekend,
+    # Order characteristics
+    order_number, add_to_cart_order,
+    days_since_prior_order,
+    # Reorder behavior
+    reordered, is_reordered
+  )</code></pre>
+<div id="column" class="section level2" data-width="650">
+<h2>Column</h2>
+<div id="top-20-most-popular-products" class="section level3">
+<h3>Top 20 Most Popular Products</h3>
+<pre class="r"><code>top20_products =
+  instacart_df |&gt;
+  count(product_name, sort = TRUE) |&gt;
+  slice_head(n = 20) |&gt;
+  mutate(
+     product_name = fct_reorder(product_name, n)
+     ) |&gt;
+  plot_ly(
+    x = ~n,
+    y = ~product_name, 
+    type = &quot;bar&quot;, 
+    orientation = &quot;h&quot;,
+    marker = list(
+      color = ~n,
+      colorscale = list(
+        c(0, &quot;#FEF0D9&quot;),
+        c(0.5, &quot;#FD8D3C&quot;),
+        c(1, &quot;#D94701&quot;)
+      ),
+      line = list(color = &quot;#8B4513&quot;, width = 1)
+    ),
+    text = ~paste0(product_name, &quot;&lt;br&gt;Orders: &quot;, n),
+    hovertemplate = &quot;&lt;b&gt;%{y}&lt;/b&gt;&lt;br&gt;Total Orders: %{x:,}&lt;extra&gt;&lt;/extra&gt;&quot;
+) |&gt;
+    layout(
+      title = list(
+        text = &quot;&lt;b&gt;Top 20 Most Popular Products on Instacart&lt;/b&gt;&quot;,
+        font = list(size = 18)
+      ),
+      xaxis = list(
+        title = &quot;Number of Orders&quot;,
+        titlefont = list(size = 14),
+        gridcolor = &quot;#E5E5E5&quot;
+      ),
+      yaxis = list(
+        title = &quot;&quot;,
+        titlefont = list(size = 14),
+        tickfont = list(size = 11)
+      ),
+      plot_bgcolor = &quot;#FAFAFA&quot;,
+      paper_bgcolor = &quot;white&quot;,
+      margin = list(l = 200, r = 50, t = 80, b = 60),
+      hovermode = &quot;closest&quot;
+    )
+
+top20_products</code></pre>
+<div class="plotly html-widget html-fill-item" id="htmlwidget-f58b095b78e865e60e86" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-f58b095b78e865e60e86">{"x":{"visdat":{"54943b6e40ff":["function () ","plotlyVisDat"]},"cur_data":"54943b6e40ff","attrs":{"54943b6e40ff":{"x":{},"y":{},"orientation":"h","marker":{"color":{},"colorscale":[["0","#FEF0D9"],["0.5","#FD8D3C"],["1","#D94701"]],"line":{"color":"#8B4513","width":1}},"text":{},"hovertemplate":"<b>%{y}<\/b><br>Total Orders: %{x:,}<extra><\/extra>","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":60,"l":200,"t":80,"r":50},"title":{"text":"<b>Top 20 Most Popular Products on Instacart<\/b>","font":{"size":18}},"xaxis":{"domain":[0,1],"automargin":true,"title":"Number of Orders","titlefont":{"size":14},"gridcolor":"#E5E5E5"},"yaxis":{"domain":[0,1],"automargin":true,"title":"","titlefont":{"size":14},"tickfont":{"size":11},"type":"category","categoryorder":"array","categoryarray":["Organic Red Onion","Organic Grape Tomatoes","Asparagus","Seedless Red Grapes","Organic Garlic","Organic Yellow Onion","Organic Zucchini","Organic Cucumber","Organic Whole Milk","Organic Blueberries","Organic Raspberries","Limes","Strawberries","Organic Hass Avocado","Organic Avocado","Large Lemon","Organic Baby Spinach","Organic Strawberries","Bag of Organic Bananas","Banana"]},"plot_bgcolor":"#FAFAFA","paper_bgcolor":"white","hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[18726,15480,10894,9784,8135,7409,7293,6494,6033,5546,4966,4908,4613,4589,4290,4158,4059,3868,3823,3818],"y":["Banana","Bag of Organic Bananas","Organic Strawberries","Organic Baby Spinach","Large Lemon","Organic Avocado","Organic Hass Avocado","Strawberries","Limes","Organic Raspberries","Organic Blueberries","Organic Whole Milk","Organic Cucumber","Organic Zucchini","Organic Yellow Onion","Organic Garlic","Seedless Red Grapes","Asparagus","Organic Grape Tomatoes","Organic Red Onion"],"orientation":"h","marker":{"color":[18726,15480,10894,9784,8135,7409,7293,6494,6033,5546,4966,4908,4613,4589,4290,4158,4059,3868,3823,3818],"colorscale":[["0","#FEF0D9"],["0.5","#FD8D3C"],["1","#D94701"]],"line":{"color":"#8B4513","width":1}},"text":["Banana<br>Orders: 18726","Bag of Organic Bananas<br>Orders: 15480","Organic Strawberries<br>Orders: 10894","Organic Baby Spinach<br>Orders: 9784","Large Lemon<br>Orders: 8135","Organic Avocado<br>Orders: 7409","Organic Hass Avocado<br>Orders: 7293","Strawberries<br>Orders: 6494","Limes<br>Orders: 6033","Organic Raspberries<br>Orders: 5546","Organic Blueberries<br>Orders: 4966","Organic Whole Milk<br>Orders: 4908","Organic Cucumber<br>Orders: 4613","Organic Zucchini<br>Orders: 4589","Organic Yellow Onion<br>Orders: 4290","Organic Garlic<br>Orders: 4158","Seedless Red Grapes<br>Orders: 4059","Asparagus<br>Orders: 3868","Organic Grape Tomatoes<br>Orders: 3823","Organic Red Onion<br>Orders: 3818"],"hovertemplate":["<b>%{y}<\/b><br>Total Orders: %{x:,}<extra><\/extra>","<b>%{y}<\/b><br>Total Orders: %{x:,}<extra><\/extra>","<b>%{y}<\/b><br>Total Orders: %{x:,}<extra><\/extra>","<b>%{y}<\/b><br>Total Orders: %{x:,}<extra><\/extra>","<b>%{y}<\/b><br>Total Orders: %{x:,}<extra><\/extra>","<b>%{y}<\/b><br>Total Orders: %{x:,}<extra><\/extra>","<b>%{y}<\/b><br>Total Orders: %{x:,}<extra><\/extra>","<b>%{y}<\/b><br>Total Orders: %{x:,}<extra><\/extra>","<b>%{y}<\/b><br>Total Orders: %{x:,}<extra><\/extra>","<b>%{y}<\/b><br>Total Orders: %{x:,}<extra><\/extra>","<b>%{y}<\/b><br>Total Orders: %{x:,}<extra><\/extra>","<b>%{y}<\/b><br>Total Orders: %{x:,}<extra><\/extra>","<b>%{y}<\/b><br>Total Orders: %{x:,}<extra><\/extra>","<b>%{y}<\/b><br>Total Orders: %{x:,}<extra><\/extra>","<b>%{y}<\/b><br>Total Orders: %{x:,}<extra><\/extra>","<b>%{y}<\/b><br>Total Orders: %{x:,}<extra><\/extra>","<b>%{y}<\/b><br>Total Orders: %{x:,}<extra><\/extra>","<b>%{y}<\/b><br>Total Orders: %{x:,}<extra><\/extra>","<b>%{y}<\/b><br>Total Orders: %{x:,}<extra><\/extra>","<b>%{y}<\/b><br>Total Orders: %{x:,}<extra><\/extra>"],"type":"bar","error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<div id="column-1" class="section level2" data-width="350">
+<h2>Column</h2>
+<div id="order-time-vs-department" class="section level3">
+<h3>Order Time vs Department</h3>
+<pre class="r"><code>time_dept_data =
+  instacart_df |&gt;
+  count(order_hour_of_day, department) |&gt;
+  group_by(department) |&gt;
+  mutate(
+    dept_total = sum(n),
+    pct_of_dept = round(n / dept_total * 100, 1)
+  ) |&gt;
+  ungroup()
+
+scatterplot1 = 
+  time_dept_data |&gt;
+  plot_ly(
+    x = ~order_hour_of_day,
+    y = ~department,
+    color = ~department,
+    type = &quot;scatter&quot;,
+    mode = &quot;markers&quot;,
+    size = ~ n,
+    sizes = c(10, 500),
+    marker = list(
+      opacity = 0.7
+    ),
+    text = ~paste0(
+      &quot;&lt;b&gt;&quot;, department, &quot;&lt;/b&gt;&lt;br&gt;&quot;,
+      &quot;Hour: &quot;, order_hour_of_day, &quot;:00&lt;br&gt;&quot;,
+      &quot;Orders: &quot;, scales::comma(n), &quot;&lt;br&gt;&quot;,
+      &quot;% of dept: &quot;, pct_of_dept, &quot;%&quot;
+    ),
+    hovertemplate = &quot;%{text}&lt;extra&gt;&lt;/extra&gt;&quot;
+  ) |&gt;
+  layout(
+    title = list(
+      text = &quot;&lt;b&gt;Order Patterns: Time of Day vs Department&lt;/b&gt;&lt;br&gt;&lt;sub&gt;Bubble size represents order volume&lt;/sub&gt;&quot;,
+      font = list(size = 16)
+    ),
+    xaxis = list(
+      title = &quot;Hour of Day (0-23)&quot;,
+      titlefont = list(size = 14),
+      tickmode = &quot;linear&quot;,
+      tick0 = 0,
+      dtick = 2
+    ),
+    yaxis = list(
+      title = &quot;Department&quot;,
+      titlefont = list(size = 14),
+      tickfont = list(size = 11),
+      categoryorder = &quot;total ascending&quot;
+    )
+  )
+
+scatterplot1</code></pre>
+<pre><code>## Warning: `line.width` does not currently support multiple values.
+## Warning: `line.width` does not currently support multiple values.
+## Warning: `line.width` does not currently support multiple values.
+## Warning: `line.width` does not currently support multiple values.
+## Warning: `line.width` does not currently support multiple values.
+## Warning: `line.width` does not currently support multiple values.
+## Warning: `line.width` does not currently support multiple values.
+## Warning: `line.width` does not currently support multiple values.
+## Warning: `line.width` does not currently support multiple values.
+## Warning: `line.width` does not currently support multiple values.
+## Warning: `line.width` does not currently support multiple values.
+## Warning: `line.width` does not currently support multiple values.
+## Warning: `line.width` does not currently support multiple values.
+## Warning: `line.width` does not currently support multiple values.
+## Warning: `line.width` does not currently support multiple values.
+## Warning: `line.width` does not currently support multiple values.
+## Warning: `line.width` does not currently support multiple values.
+## Warning: `line.width` does not currently support multiple values.
+## Warning: `line.width` does not currently support multiple values.
+## Warning: `line.width` does not currently support multiple values.
+## Warning: `line.width` does not currently support multiple values.</code></pre>
+<pre><code>## Warning in RColorBrewer::brewer.pal(max(N, 3L), &quot;Set2&quot;): n too large, allowed maximum for palette Set2 is 8
+## Returning the palette you asked for with that many colors
+## Warning in RColorBrewer::brewer.pal(max(N, 3L), &quot;Set2&quot;): n too large, allowed maximum for palette Set2 is 8
+## Returning the palette you asked for with that many colors</code></pre>
+<div class="plotly html-widget html-fill-item" id="htmlwidget-f0a7e943834c11599a24" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-f0a7e943834c11599a24">{"x":{"visdat":{"5494200d31bf":["function () ","plotlyVisDat"]},"cur_data":"5494200d31bf","attrs":{"5494200d31bf":{"x":{},"y":{},"mode":"markers","marker":{"opacity":0.69999999999999996},"text":{},"hovertemplate":"%{text}<extra><\/extra>","color":{},"size":{},"alpha_stroke":1,"sizes":[10,500],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":{"text":"<b>Order Patterns: Time of Day vs Department<\/b><br><sub>Bubble size represents order volume<\/sub>","font":{"size":16}},"xaxis":{"domain":[0,1],"automargin":true,"title":"Hour of Day (0-23)","titlefont":{"size":14},"tickmode":"linear","tick0":0,"dtick":2},"yaxis":{"domain":[0,1],"automargin":true,"title":"Department","titlefont":{"size":14},"tickfont":{"size":11},"categoryorder":"total ascending","type":"category","categoryarray":["alcohol","babies","bakery","beverages","breakfast","bulk","canned goods","dairy eggs","deli","dry goods pasta","frozen","household","international","meat seafood","missing","other","pantry","personal care","pets","produce","snacks"]},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],"y":["alcohol","alcohol","alcohol","alcohol","alcohol","alcohol","alcohol","alcohol","alcohol","alcohol","alcohol","alcohol","alcohol","alcohol","alcohol","alcohol","alcohol","alcohol","alcohol","alcohol","alcohol","alcohol","alcohol","alcohol"],"mode":"markers","marker":{"color":"rgba(102,194,165,1)","size":[10.443063012150326,10.429217293020628,10.05538287651879,10.027691438259396,10.013845719129698,10.152302910426673,10.456908731280022,11.259960440802487,12.215315060751625,14.735235942356598,15.649053404916643,16.299802204012433,16.825939530940943,17.185928228313081,17.158236790053689,18.570500141282849,17.296693981350664,16.119807855326364,14.859847414523877,13.032212489403786,12.049166431195253,11.163040406894602,10.623057360836395,10.553828765187907],"sizemode":"area","opacity":0.69999999999999996,"line":{"color":"rgba(102,194,165,1)"}},"text":["<b>alcohol<\/b><br>Hour: 0:00<br>Orders: 33<br>% of dept: 0.6%","<b>alcohol<\/b><br>Hour: 1:00<br>Orders: 32<br>% of dept: 0.6%","<b>alcohol<\/b><br>Hour: 2:00<br>Orders: 5<br>% of dept: 0.1%","<b>alcohol<\/b><br>Hour: 3:00<br>Orders: 3<br>% of dept: 0.1%","<b>alcohol<\/b><br>Hour: 4:00<br>Orders: 2<br>% of dept: 0%","<b>alcohol<\/b><br>Hour: 5:00<br>Orders: 12<br>% of dept: 0.2%","<b>alcohol<\/b><br>Hour: 6:00<br>Orders: 34<br>% of dept: 0.6%","<b>alcohol<\/b><br>Hour: 7:00<br>Orders: 92<br>% of dept: 1.6%","<b>alcohol<\/b><br>Hour: 8:00<br>Orders: 161<br>% of dept: 2.9%","<b>alcohol<\/b><br>Hour: 9:00<br>Orders: 343<br>% of dept: 6.1%","<b>alcohol<\/b><br>Hour: 10:00<br>Orders: 409<br>% of dept: 7.3%","<b>alcohol<\/b><br>Hour: 11:00<br>Orders: 456<br>% of dept: 8.1%","<b>alcohol<\/b><br>Hour: 12:00<br>Orders: 494<br>% of dept: 8.8%","<b>alcohol<\/b><br>Hour: 13:00<br>Orders: 520<br>% of dept: 9.3%","<b>alcohol<\/b><br>Hour: 14:00<br>Orders: 518<br>% of dept: 9.3%","<b>alcohol<\/b><br>Hour: 15:00<br>Orders: 620<br>% of dept: 11.1%","<b>alcohol<\/b><br>Hour: 16:00<br>Orders: 528<br>% of dept: 9.4%","<b>alcohol<\/b><br>Hour: 17:00<br>Orders: 443<br>% of dept: 7.9%","<b>alcohol<\/b><br>Hour: 18:00<br>Orders: 352<br>% of dept: 6.3%","<b>alcohol<\/b><br>Hour: 19:00<br>Orders: 220<br>% of dept: 3.9%","<b>alcohol<\/b><br>Hour: 20:00<br>Orders: 149<br>% of dept: 2.7%","<b>alcohol<\/b><br>Hour: 21:00<br>Orders: 85<br>% of dept: 1.5%","<b>alcohol<\/b><br>Hour: 22:00<br>Orders: 46<br>% of dept: 0.8%","<b>alcohol<\/b><br>Hour: 23:00<br>Orders: 41<br>% of dept: 0.7%"],"hovertemplate":["%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>"],"type":"scatter","name":"alcohol","textfont":{"color":"rgba(102,194,165,1)","size":[10.443063012150326,10.429217293020628,10.05538287651879,10.027691438259396,10.013845719129698,10.152302910426673,10.456908731280022,11.259960440802487,12.215315060751625,14.735235942356598,15.649053404916643,16.299802204012433,16.825939530940943,17.185928228313081,17.158236790053689,18.570500141282849,17.296693981350664,16.119807855326364,14.859847414523877,13.032212489403786,12.049166431195253,11.163040406894602,10.623057360836395,10.553828765187907]},"error_y":{"color":"rgba(102,194,165,1)","width":[]},"error_x":{"color":"rgba(102,194,165,1)","width":[]},"line":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],"y":["babies","babies","babies","babies","babies","babies","babies","babies","babies","babies","babies","babies","babies","babies","babies","babies","babies","babies","babies","babies","babies","babies","babies","babies"],"mode":"markers","marker":{"color":"rgba(172,179,141,1)","size":[10.955354619949139,10.955354619949139,10.664594518225487,10.332297259112744,10.290760101723651,10.512291607798813,12.782989545069228,17.32438541961006,23.111896015823682,27.390223226900254,25.950268437411701,25.022605255721956,23.250353207120654,25.631816897428653,26.476405764340207,26.379485730432325,25.839502684374118,21.865781294150892,19.816614862955639,18.210511443910711,18.875105962136196,16.756710935292457,15.455213337100876,12.686069511161346],"sizemode":"area","opacity":0.69999999999999996,"line":{"color":"rgba(172,179,141,1)"}},"text":["<b>babies<\/b><br>Hour: 0:00<br>Orders: 70<br>% of dept: 0.5%","<b>babies<\/b><br>Hour: 1:00<br>Orders: 70<br>% of dept: 0.5%","<b>babies<\/b><br>Hour: 2:00<br>Orders: 49<br>% of dept: 0.3%","<b>babies<\/b><br>Hour: 3:00<br>Orders: 25<br>% of dept: 0.2%","<b>babies<\/b><br>Hour: 4:00<br>Orders: 22<br>% of dept: 0.1%","<b>babies<\/b><br>Hour: 5:00<br>Orders: 38<br>% of dept: 0.3%","<b>babies<\/b><br>Hour: 6:00<br>Orders: 202<br>% of dept: 1.4%","<b>babies<\/b><br>Hour: 7:00<br>Orders: 530<br>% of dept: 3.5%","<b>babies<\/b><br>Hour: 8:00<br>Orders: 948<br>% of dept: 6.3%","<b>babies<\/b><br>Hour: 9:00<br>Orders: 1,257<br>% of dept: 8.4%","<b>babies<\/b><br>Hour: 10:00<br>Orders: 1,153<br>% of dept: 7.7%","<b>babies<\/b><br>Hour: 11:00<br>Orders: 1,086<br>% of dept: 7.3%","<b>babies<\/b><br>Hour: 12:00<br>Orders: 958<br>% of dept: 6.4%","<b>babies<\/b><br>Hour: 13:00<br>Orders: 1,130<br>% of dept: 7.6%","<b>babies<\/b><br>Hour: 14:00<br>Orders: 1,191<br>% of dept: 8%","<b>babies<\/b><br>Hour: 15:00<br>Orders: 1,184<br>% of dept: 7.9%","<b>babies<\/b><br>Hour: 16:00<br>Orders: 1,145<br>% of dept: 7.7%","<b>babies<\/b><br>Hour: 17:00<br>Orders: 858<br>% of dept: 5.7%","<b>babies<\/b><br>Hour: 18:00<br>Orders: 710<br>% of dept: 4.8%","<b>babies<\/b><br>Hour: 19:00<br>Orders: 594<br>% of dept: 4%","<b>babies<\/b><br>Hour: 20:00<br>Orders: 642<br>% of dept: 4.3%","<b>babies<\/b><br>Hour: 21:00<br>Orders: 489<br>% of dept: 3.3%","<b>babies<\/b><br>Hour: 22:00<br>Orders: 395<br>% of dept: 2.6%","<b>babies<\/b><br>Hour: 23:00<br>Orders: 195<br>% of dept: 1.3%"],"hovertemplate":["%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>"],"type":"scatter","name":"babies","textfont":{"color":"rgba(172,179,141,1)","size":[10.955354619949139,10.955354619949139,10.664594518225487,10.332297259112744,10.290760101723651,10.512291607798813,12.782989545069228,17.32438541961006,23.111896015823682,27.390223226900254,25.950268437411701,25.022605255721956,23.250353207120654,25.631816897428653,26.476405764340207,26.379485730432325,25.839502684374118,21.865781294150892,19.816614862955639,18.210511443910711,18.875105962136196,16.756710935292457,15.455213337100876,12.686069511161346]},"error_y":{"color":"rgba(172,179,141,1)","width":[]},"error_x":{"color":"rgba(172,179,141,1)","width":[]},"line":{"color":"rgba(172,179,141,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],"y":["bakery","bakery","bakery","bakery","bakery","bakery","bakery","bakery","bakery","bakery","bakery","bakery","bakery","bakery","bakery","bakery","bakery","bakery","bakery","bakery","bakery","bakery","bakery","bakery"],"mode":"markers","marker":{"color":"rgba(219,161,118,1)","size":[14.236790053687482,12.409155128567392,11.412263351229161,11.024583215597627,11.1768861260243,11.744560610341905,15.912122068380899,27.777903362531788,44.448149194687765,56.452387680135629,62.904492794574736,63.472167278892343,64.081378920599036,65.687482339643964,68.968917773382316,66.144391070924001,63.416784402373551,57.518508053122353,48.034190449279457,37.996044080248659,30.11782989545069,25.368748233964396,22.502684374116981,16.90901384571913],"sizemode":"area","opacity":0.69999999999999996,"line":{"color":"rgba(219,161,118,1)"}},"text":["<b>bakery<\/b><br>Hour: 0:00<br>Orders: 307<br>% of dept: 0.6%","<b>bakery<\/b><br>Hour: 1:00<br>Orders: 175<br>% of dept: 0.4%","<b>bakery<\/b><br>Hour: 2:00<br>Orders: 103<br>% of dept: 0.2%","<b>bakery<\/b><br>Hour: 3:00<br>Orders: 75<br>% of dept: 0.2%","<b>bakery<\/b><br>Hour: 4:00<br>Orders: 86<br>% of dept: 0.2%","<b>bakery<\/b><br>Hour: 5:00<br>Orders: 127<br>% of dept: 0.3%","<b>bakery<\/b><br>Hour: 6:00<br>Orders: 428<br>% of dept: 0.9%","<b>bakery<\/b><br>Hour: 7:00<br>Orders: 1,285<br>% of dept: 2.7%","<b>bakery<\/b><br>Hour: 8:00<br>Orders: 2,489<br>% of dept: 5.1%","<b>bakery<\/b><br>Hour: 9:00<br>Orders: 3,356<br>% of dept: 6.9%","<b>bakery<\/b><br>Hour: 10:00<br>Orders: 3,822<br>% of dept: 7.9%","<b>bakery<\/b><br>Hour: 11:00<br>Orders: 3,863<br>% of dept: 8%","<b>bakery<\/b><br>Hour: 12:00<br>Orders: 3,907<br>% of dept: 8.1%","<b>bakery<\/b><br>Hour: 13:00<br>Orders: 4,023<br>% of dept: 8.3%","<b>bakery<\/b><br>Hour: 14:00<br>Orders: 4,260<br>% of dept: 8.8%","<b>bakery<\/b><br>Hour: 15:00<br>Orders: 4,056<br>% of dept: 8.4%","<b>bakery<\/b><br>Hour: 16:00<br>Orders: 3,859<br>% of dept: 8%","<b>bakery<\/b><br>Hour: 17:00<br>Orders: 3,433<br>% of dept: 7.1%","<b>bakery<\/b><br>Hour: 18:00<br>Orders: 2,748<br>% of dept: 5.7%","<b>bakery<\/b><br>Hour: 19:00<br>Orders: 2,023<br>% of dept: 4.2%","<b>bakery<\/b><br>Hour: 20:00<br>Orders: 1,454<br>% of dept: 3%","<b>bakery<\/b><br>Hour: 21:00<br>Orders: 1,111<br>% of dept: 2.3%","<b>bakery<\/b><br>Hour: 22:00<br>Orders: 904<br>% of dept: 1.9%","<b>bakery<\/b><br>Hour: 23:00<br>Orders: 500<br>% of dept: 1%"],"hovertemplate":["%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>"],"type":"scatter","name":"bakery","textfont":{"color":"rgba(219,161,118,1)","size":[14.236790053687482,12.409155128567392,11.412263351229161,11.024583215597627,11.1768861260243,11.744560610341905,15.912122068380899,27.777903362531788,44.448149194687765,56.452387680135629,62.904492794574736,63.472167278892343,64.081378920599036,65.687482339643964,68.968917773382316,66.144391070924001,63.416784402373551,57.518508053122353,48.034190449279457,37.996044080248659,30.11782989545069,25.368748233964396,22.502684374116981,16.90901384571913]},"error_y":{"color":"rgba(219,161,118,1)","width":[]},"error_x":{"color":"rgba(219,161,118,1)","width":[]},"line":{"color":"rgba(219,161,118,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],"y":["beverages","beverages","beverages","beverages","beverages","beverages","beverages","beverages","beverages","beverages","beverages","beverages","beverages","beverages","beverages","beverages","beverages","beverages","beverages","beverages","beverages","beverages","beverages","beverages"],"mode":"markers","marker":{"color":"rgba(248,142,103,1)","size":[19.595083356880476,16.535179429217294,13.932184232834135,13.406046905905622,13.18451539983046,15.496750494489969,24.261090703588586,48.961853630969195,84.753037581237635,123.3133653574456,145.53574456061034,144.42808703023454,137.07601017236505,138.90364509748517,144.42808703023454,140.34359988697372,130.09776773099748,121.79033625317886,99.138739756993502,77.567109352924561,55.289347273241027,45.306583780729021,37.552981068098333,27.819440519920882],"sizemode":"area","opacity":0.69999999999999996,"line":{"color":"rgba(248,142,103,1)"}},"text":["<b>beverages<\/b><br>Hour: 0:00<br>Orders: 694<br>% of dept: 0.6%","<b>beverages<\/b><br>Hour: 1:00<br>Orders: 473<br>% of dept: 0.4%","<b>beverages<\/b><br>Hour: 2:00<br>Orders: 285<br>% of dept: 0.2%","<b>beverages<\/b><br>Hour: 3:00<br>Orders: 247<br>% of dept: 0.2%","<b>beverages<\/b><br>Hour: 4:00<br>Orders: 231<br>% of dept: 0.2%","<b>beverages<\/b><br>Hour: 5:00<br>Orders: 398<br>% of dept: 0.3%","<b>beverages<\/b><br>Hour: 6:00<br>Orders: 1,031<br>% of dept: 0.9%","<b>beverages<\/b><br>Hour: 7:00<br>Orders: 2,815<br>% of dept: 2.5%","<b>beverages<\/b><br>Hour: 8:00<br>Orders: 5,400<br>% of dept: 4.7%","<b>beverages<\/b><br>Hour: 9:00<br>Orders: 8,185<br>% of dept: 7.2%","<b>beverages<\/b><br>Hour: 10:00<br>Orders: 9,790<br>% of dept: 8.6%","<b>beverages<\/b><br>Hour: 11:00<br>Orders: 9,710<br>% of dept: 8.5%","<b>beverages<\/b><br>Hour: 12:00<br>Orders: 9,179<br>% of dept: 8%","<b>beverages<\/b><br>Hour: 13:00<br>Orders: 9,311<br>% of dept: 8.2%","<b>beverages<\/b><br>Hour: 14:00<br>Orders: 9,710<br>% of dept: 8.5%","<b>beverages<\/b><br>Hour: 15:00<br>Orders: 9,415<br>% of dept: 8.3%","<b>beverages<\/b><br>Hour: 16:00<br>Orders: 8,675<br>% of dept: 7.6%","<b>beverages<\/b><br>Hour: 17:00<br>Orders: 8,075<br>% of dept: 7.1%","<b>beverages<\/b><br>Hour: 18:00<br>Orders: 6,439<br>% of dept: 5.6%","<b>beverages<\/b><br>Hour: 19:00<br>Orders: 4,881<br>% of dept: 4.3%","<b>beverages<\/b><br>Hour: 20:00<br>Orders: 3,272<br>% of dept: 2.9%","<b>beverages<\/b><br>Hour: 21:00<br>Orders: 2,551<br>% of dept: 2.2%","<b>beverages<\/b><br>Hour: 22:00<br>Orders: 1,991<br>% of dept: 1.7%","<b>beverages<\/b><br>Hour: 23:00<br>Orders: 1,288<br>% of dept: 1.1%"],"hovertemplate":["%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>"],"type":"scatter","name":"beverages","textfont":{"color":"rgba(248,142,103,1)","size":[19.595083356880476,16.535179429217294,13.932184232834135,13.406046905905622,13.18451539983046,15.496750494489969,24.261090703588586,48.961853630969195,84.753037581237635,123.3133653574456,145.53574456061034,144.42808703023454,137.07601017236505,138.90364509748517,144.42808703023454,140.34359988697372,130.09776773099748,121.79033625317886,99.138739756993502,77.567109352924561,55.289347273241027,45.306583780729021,37.552981068098333,27.819440519920882]},"error_y":{"color":"rgba(248,142,103,1)","width":[]},"error_x":{"color":"rgba(248,142,103,1)","width":[]},"line":{"color":"rgba(248,142,103,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],"y":["breakfast","breakfast","breakfast","breakfast","breakfast","breakfast","breakfast","breakfast","breakfast","breakfast","breakfast","breakfast","breakfast","breakfast","breakfast","breakfast","breakfast","breakfast","breakfast","breakfast","breakfast","breakfast","breakfast","breakfast"],"mode":"markers","marker":{"color":"rgba(217,150,141,1)","size":[12.409155128567392,11.703023452952811,10.816897428652162,10.733823113873976,10.844588866911558,11.204577564283696,13.641424131110483,21.893472732410288,30.588584345860415,39.64368465668268,43.991240463407742,43.617406046905906,41.014410850522744,41.817462560045207,45.057360836394466,42.82820005651314,41.346708109635486,38.882170104549303,32.180842045775641,28.207120655552416,22.322690025430912,20.259677875105965,18.362814354337385,14.749081661486295],"sizemode":"area","opacity":0.69999999999999996,"line":{"color":"rgba(217,150,141,1)"}},"text":["<b>breakfast<\/b><br>Hour: 0:00<br>Orders: 175<br>% of dept: 0.6%","<b>breakfast<\/b><br>Hour: 1:00<br>Orders: 124<br>% of dept: 0.4%","<b>breakfast<\/b><br>Hour: 2:00<br>Orders: 60<br>% of dept: 0.2%","<b>breakfast<\/b><br>Hour: 3:00<br>Orders: 54<br>% of dept: 0.2%","<b>breakfast<\/b><br>Hour: 4:00<br>Orders: 62<br>% of dept: 0.2%","<b>breakfast<\/b><br>Hour: 5:00<br>Orders: 88<br>% of dept: 0.3%","<b>breakfast<\/b><br>Hour: 6:00<br>Orders: 264<br>% of dept: 0.9%","<b>breakfast<\/b><br>Hour: 7:00<br>Orders: 860<br>% of dept: 2.9%","<b>breakfast<\/b><br>Hour: 8:00<br>Orders: 1,488<br>% of dept: 5%","<b>breakfast<\/b><br>Hour: 9:00<br>Orders: 2,142<br>% of dept: 7.3%","<b>breakfast<\/b><br>Hour: 10:00<br>Orders: 2,456<br>% of dept: 8.3%","<b>breakfast<\/b><br>Hour: 11:00<br>Orders: 2,429<br>% of dept: 8.2%","<b>breakfast<\/b><br>Hour: 12:00<br>Orders: 2,241<br>% of dept: 7.6%","<b>breakfast<\/b><br>Hour: 13:00<br>Orders: 2,299<br>% of dept: 7.8%","<b>breakfast<\/b><br>Hour: 14:00<br>Orders: 2,533<br>% of dept: 8.6%","<b>breakfast<\/b><br>Hour: 15:00<br>Orders: 2,372<br>% of dept: 8%","<b>breakfast<\/b><br>Hour: 16:00<br>Orders: 2,265<br>% of dept: 7.7%","<b>breakfast<\/b><br>Hour: 17:00<br>Orders: 2,087<br>% of dept: 7.1%","<b>breakfast<\/b><br>Hour: 18:00<br>Orders: 1,603<br>% of dept: 5.4%","<b>breakfast<\/b><br>Hour: 19:00<br>Orders: 1,316<br>% of dept: 4.5%","<b>breakfast<\/b><br>Hour: 20:00<br>Orders: 891<br>% of dept: 3%","<b>breakfast<\/b><br>Hour: 21:00<br>Orders: 742<br>% of dept: 2.5%","<b>breakfast<\/b><br>Hour: 22:00<br>Orders: 605<br>% of dept: 2.1%","<b>breakfast<\/b><br>Hour: 23:00<br>Orders: 344<br>% of dept: 1.2%"],"hovertemplate":["%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>"],"type":"scatter","name":"breakfast","textfont":{"color":"rgba(217,150,141,1)","size":[12.409155128567392,11.703023452952811,10.816897428652162,10.733823113873976,10.844588866911558,11.204577564283696,13.641424131110483,21.893472732410288,30.588584345860415,39.64368465668268,43.991240463407742,43.617406046905906,41.014410850522744,41.817462560045207,45.057360836394466,42.82820005651314,41.346708109635486,38.882170104549303,32.180842045775641,28.207120655552416,22.322690025430912,20.259677875105965,18.362814354337385,14.749081661486295]},"error_y":{"color":"rgba(217,150,141,1)","width":[]},"error_x":{"color":"rgba(217,150,141,1)","width":[]},"line":{"color":"rgba(217,150,141,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[0,1,2,3,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],"y":["bulk","bulk","bulk","bulk","bulk","bulk","bulk","bulk","bulk","bulk","bulk","bulk","bulk","bulk","bulk","bulk","bulk","bulk","bulk","bulk","bulk","bulk","bulk"],"mode":"markers","marker":{"color":"rgba(178,156,177,1)","size":[10.152302910426673,10.166148629556371,10.027691438259396,10,10.05538287651879,10.041537157389094,10.359988697372138,11.038428934727325,11.204577564283696,11.523029104266742,11.689177733823113,11.315343317321277,11.467646227747952,11.827634925120091,11.412263351229161,11.246114721672789,11.204577564283696,11.06612037298672,10.927663181689743,10.567674484317603,10.456908731280022,10.484600169539418,10.263068663464255],"sizemode":"area","opacity":0.69999999999999996,"line":{"color":"rgba(178,156,177,1)"}},"text":["<b>bulk<\/b><br>Hour: 0:00<br>Orders: 12<br>% of dept: 0.9%","<b>bulk<\/b><br>Hour: 1:00<br>Orders: 13<br>% of dept: 1%","<b>bulk<\/b><br>Hour: 2:00<br>Orders: 3<br>% of dept: 0.2%","<b>bulk<\/b><br>Hour: 3:00<br>Orders: 1<br>% of dept: 0.1%","<b>bulk<\/b><br>Hour: 5:00<br>Orders: 5<br>% of dept: 0.4%","<b>bulk<\/b><br>Hour: 6:00<br>Orders: 4<br>% of dept: 0.3%","<b>bulk<\/b><br>Hour: 7:00<br>Orders: 27<br>% of dept: 2%","<b>bulk<\/b><br>Hour: 8:00<br>Orders: 76<br>% of dept: 5.6%","<b>bulk<\/b><br>Hour: 9:00<br>Orders: 88<br>% of dept: 6.5%","<b>bulk<\/b><br>Hour: 10:00<br>Orders: 111<br>% of dept: 8.2%","<b>bulk<\/b><br>Hour: 11:00<br>Orders: 123<br>% of dept: 9.1%","<b>bulk<\/b><br>Hour: 12:00<br>Orders: 96<br>% of dept: 7.1%","<b>bulk<\/b><br>Hour: 13:00<br>Orders: 107<br>% of dept: 7.9%","<b>bulk<\/b><br>Hour: 14:00<br>Orders: 133<br>% of dept: 9.8%","<b>bulk<\/b><br>Hour: 15:00<br>Orders: 103<br>% of dept: 7.6%","<b>bulk<\/b><br>Hour: 16:00<br>Orders: 91<br>% of dept: 6.7%","<b>bulk<\/b><br>Hour: 17:00<br>Orders: 88<br>% of dept: 6.5%","<b>bulk<\/b><br>Hour: 18:00<br>Orders: 78<br>% of dept: 5.7%","<b>bulk<\/b><br>Hour: 19:00<br>Orders: 68<br>% of dept: 5%","<b>bulk<\/b><br>Hour: 20:00<br>Orders: 42<br>% of dept: 3.1%","<b>bulk<\/b><br>Hour: 21:00<br>Orders: 34<br>% of dept: 2.5%","<b>bulk<\/b><br>Hour: 22:00<br>Orders: 36<br>% of dept: 2.6%","<b>bulk<\/b><br>Hour: 23:00<br>Orders: 20<br>% of dept: 1.5%"],"hovertemplate":["%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>"],"type":"scatter","name":"bulk","textfont":{"color":"rgba(178,156,177,1)","size":[10.152302910426673,10.166148629556371,10.027691438259396,10,10.05538287651879,10.041537157389094,10.359988697372138,11.038428934727325,11.204577564283696,11.523029104266742,11.689177733823113,11.315343317321277,11.467646227747952,11.827634925120091,11.412263351229161,11.246114721672789,11.204577564283696,11.06612037298672,10.927663181689743,10.567674484317603,10.456908731280022,10.484600169539418,10.263068663464255]},"error_y":{"color":"rgba(178,156,177,1)","width":[]},"error_x":{"color":"rgba(178,156,177,1)","width":[]},"line":{"color":"rgba(178,156,177,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],"y":["canned goods","canned goods","canned goods","canned goods","canned goods","canned goods","canned goods","canned goods","canned goods","canned goods","canned goods","canned goods","canned goods","canned goods","canned goods","canned goods","canned goods","canned goods","canned goods","canned goods","canned goods","canned goods","canned goods","canned goods"],"mode":"markers","marker":{"color":"rgba(152,158,202,1)","size":[14.472167278892343,12.063012150324951,11.356880474710371,11.370726193840067,11.315343317321277,11.758406329471603,15.37213902232269,26.199491381746256,39.339078835829326,53.946312517660353,59.706131675614579,66.670528397852507,65.189036450974854,66.670528397852507,65.105962136196666,64.8844306301215,62.267589714608647,53.655552415936704,44.711217858152018,36.182254874258263,28.567109352924554,25.853348403503816,23.236507487990956,17.73975699350099],"sizemode":"area","opacity":0.69999999999999996,"line":{"color":"rgba(152,158,202,1)"}},"text":["<b>canned goods<\/b><br>Hour: 0:00<br>Orders: 324<br>% of dept: 0.7%","<b>canned goods<\/b><br>Hour: 1:00<br>Orders: 150<br>% of dept: 0.3%","<b>canned goods<\/b><br>Hour: 2:00<br>Orders: 99<br>% of dept: 0.2%","<b>canned goods<\/b><br>Hour: 3:00<br>Orders: 100<br>% of dept: 0.2%","<b>canned goods<\/b><br>Hour: 4:00<br>Orders: 96<br>% of dept: 0.2%","<b>canned goods<\/b><br>Hour: 5:00<br>Orders: 128<br>% of dept: 0.3%","<b>canned goods<\/b><br>Hour: 6:00<br>Orders: 389<br>% of dept: 0.8%","<b>canned goods<\/b><br>Hour: 7:00<br>Orders: 1,171<br>% of dept: 2.5%","<b>canned goods<\/b><br>Hour: 8:00<br>Orders: 2,120<br>% of dept: 4.5%","<b>canned goods<\/b><br>Hour: 9:00<br>Orders: 3,175<br>% of dept: 6.8%","<b>canned goods<\/b><br>Hour: 10:00<br>Orders: 3,591<br>% of dept: 7.7%","<b>canned goods<\/b><br>Hour: 11:00<br>Orders: 4,094<br>% of dept: 8.7%","<b>canned goods<\/b><br>Hour: 12:00<br>Orders: 3,987<br>% of dept: 8.5%","<b>canned goods<\/b><br>Hour: 13:00<br>Orders: 4,094<br>% of dept: 8.7%","<b>canned goods<\/b><br>Hour: 14:00<br>Orders: 3,981<br>% of dept: 8.5%","<b>canned goods<\/b><br>Hour: 15:00<br>Orders: 3,965<br>% of dept: 8.5%","<b>canned goods<\/b><br>Hour: 16:00<br>Orders: 3,776<br>% of dept: 8.1%","<b>canned goods<\/b><br>Hour: 17:00<br>Orders: 3,154<br>% of dept: 6.7%","<b>canned goods<\/b><br>Hour: 18:00<br>Orders: 2,508<br>% of dept: 5.4%","<b>canned goods<\/b><br>Hour: 19:00<br>Orders: 1,892<br>% of dept: 4%","<b>canned goods<\/b><br>Hour: 20:00<br>Orders: 1,342<br>% of dept: 2.9%","<b>canned goods<\/b><br>Hour: 21:00<br>Orders: 1,146<br>% of dept: 2.4%","<b>canned goods<\/b><br>Hour: 22:00<br>Orders: 957<br>% of dept: 2%","<b>canned goods<\/b><br>Hour: 23:00<br>Orders: 560<br>% of dept: 1.2%"],"hovertemplate":["%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>"],"type":"scatter","name":"canned goods","textfont":{"color":"rgba(152,158,202,1)","size":[14.472167278892343,12.063012150324951,11.356880474710371,11.370726193840067,11.315343317321277,11.758406329471603,15.37213902232269,26.199491381746256,39.339078835829326,53.946312517660353,59.706131675614579,66.670528397852507,65.189036450974854,66.670528397852507,65.105962136196666,64.8844306301215,62.267589714608647,53.655552415936704,44.711217858152018,36.182254874258263,28.567109352924554,25.853348403503816,23.236507487990956,17.73975699350099]},"error_y":{"color":"rgba(152,158,202,1)","width":[]},"error_x":{"color":"rgba(152,158,202,1)","width":[]},"line":{"color":"rgba(152,158,202,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],"y":["dairy eggs","dairy eggs","dairy eggs","dairy eggs","dairy eggs","dairy eggs","dairy eggs","dairy eggs","dairy eggs","dairy eggs","dairy eggs","dairy eggs","dairy eggs","dairy eggs","dairy eggs","dairy eggs","dairy eggs","dairy eggs","dairy eggs","dairy eggs","dairy eggs","dairy eggs","dairy eggs","dairy eggs"],"mode":"markers","marker":{"color":"rgba(185,152,199,1)","size":[28.414806442497881,21.436564001130265,16.299802204012433,15.399830460582084,15.289064707544505,18.528962983893756,37.843741169821982,93.988132240745969,165.59819157954223,219.69341621927097,250.55552415936705,251.04012432890647,245.47414523876802,255.60921164170668,267.502684374117,258.46142978242437,249.40632947160216,217.33964396722237,177.17321277196947,135.7329754167844,99.734105679570504,89.100593387962689,70.201186775925407,45.071206555524157],"sizemode":"area","opacity":0.69999999999999996,"line":{"color":"rgba(185,152,199,1)"}},"text":["<b>dairy eggs<\/b><br>Hour: 0:00<br>Orders: 1,331<br>% of dept: 0.6%","<b>dairy eggs<\/b><br>Hour: 1:00<br>Orders: 827<br>% of dept: 0.4%","<b>dairy eggs<\/b><br>Hour: 2:00<br>Orders: 456<br>% of dept: 0.2%","<b>dairy eggs<\/b><br>Hour: 3:00<br>Orders: 391<br>% of dept: 0.2%","<b>dairy eggs<\/b><br>Hour: 4:00<br>Orders: 383<br>% of dept: 0.2%","<b>dairy eggs<\/b><br>Hour: 5:00<br>Orders: 617<br>% of dept: 0.3%","<b>dairy eggs<\/b><br>Hour: 6:00<br>Orders: 2,012<br>% of dept: 0.9%","<b>dairy eggs<\/b><br>Hour: 7:00<br>Orders: 6,067<br>% of dept: 2.8%","<b>dairy eggs<\/b><br>Hour: 8:00<br>Orders: 11,239<br>% of dept: 5.2%","<b>dairy eggs<\/b><br>Hour: 9:00<br>Orders: 15,146<br>% of dept: 7%","<b>dairy eggs<\/b><br>Hour: 10:00<br>Orders: 17,375<br>% of dept: 8%","<b>dairy eggs<\/b><br>Hour: 11:00<br>Orders: 17,410<br>% of dept: 8%","<b>dairy eggs<\/b><br>Hour: 12:00<br>Orders: 17,008<br>% of dept: 7.8%","<b>dairy eggs<\/b><br>Hour: 13:00<br>Orders: 17,740<br>% of dept: 8.2%","<b>dairy eggs<\/b><br>Hour: 14:00<br>Orders: 18,599<br>% of dept: 8.6%","<b>dairy eggs<\/b><br>Hour: 15:00<br>Orders: 17,946<br>% of dept: 8.3%","<b>dairy eggs<\/b><br>Hour: 16:00<br>Orders: 17,292<br>% of dept: 8%","<b>dairy eggs<\/b><br>Hour: 17:00<br>Orders: 14,976<br>% of dept: 6.9%","<b>dairy eggs<\/b><br>Hour: 18:00<br>Orders: 12,075<br>% of dept: 5.6%","<b>dairy eggs<\/b><br>Hour: 19:00<br>Orders: 9,082<br>% of dept: 4.2%","<b>dairy eggs<\/b><br>Hour: 20:00<br>Orders: 6,482<br>% of dept: 3%","<b>dairy eggs<\/b><br>Hour: 21:00<br>Orders: 5,714<br>% of dept: 2.6%","<b>dairy eggs<\/b><br>Hour: 22:00<br>Orders: 4,349<br>% of dept: 2%","<b>dairy eggs<\/b><br>Hour: 23:00<br>Orders: 2,534<br>% of dept: 1.2%"],"hovertemplate":["%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>"],"type":"scatter","name":"dairy eggs","textfont":{"color":"rgba(185,152,199,1)","size":[28.414806442497881,21.436564001130265,16.299802204012433,15.399830460582084,15.289064707544505,18.528962983893756,37.843741169821982,93.988132240745969,165.59819157954223,219.69341621927097,250.55552415936705,251.04012432890647,245.47414523876802,255.60921164170668,267.502684374117,258.46142978242437,249.40632947160216,217.33964396722237,177.17321277196947,135.7329754167844,99.734105679570504,89.100593387962689,70.201186775925407,45.071206555524157]},"error_y":{"color":"rgba(185,152,199,1)","width":[]},"error_x":{"color":"rgba(185,152,199,1)","width":[]},"line":{"color":"rgba(185,152,199,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],"y":["deli","deli","deli","deli","deli","deli","deli","deli","deli","deli","deli","deli","deli","deli","deli","deli","deli","deli","deli","deli","deli","deli","deli","deli"],"mode":"markers","marker":{"color":"rgba(215,144,197,1)","size":[14.001412828482621,12.71376094942074,11.426109070358859,11.093811811246114,10.844588866911558,11.495337666007346,15.510596213619667,25.645662616558347,38.092964114156544,48.324950551003113,58.626165583498164,60.52302910426674,61.090703588584347,62.309126871997741,61.990675332014689,60.744560610341907,62.004521051144394,54.444758406329477,45.569652444193274,35.76688330036734,27.279457473862671,24.773382311387397,21.339643967222379,17.296693981350664],"sizemode":"area","opacity":0.69999999999999996,"line":{"color":"rgba(215,144,197,1)"}},"text":["<b>deli<\/b><br>Hour: 0:00<br>Orders: 290<br>% of dept: 0.7%","<b>deli<\/b><br>Hour: 1:00<br>Orders: 197<br>% of dept: 0.4%","<b>deli<\/b><br>Hour: 2:00<br>Orders: 104<br>% of dept: 0.2%","<b>deli<\/b><br>Hour: 3:00<br>Orders: 80<br>% of dept: 0.2%","<b>deli<\/b><br>Hour: 4:00<br>Orders: 62<br>% of dept: 0.1%","<b>deli<\/b><br>Hour: 5:00<br>Orders: 109<br>% of dept: 0.2%","<b>deli<\/b><br>Hour: 6:00<br>Orders: 399<br>% of dept: 0.9%","<b>deli<\/b><br>Hour: 7:00<br>Orders: 1,131<br>% of dept: 2.6%","<b>deli<\/b><br>Hour: 8:00<br>Orders: 2,030<br>% of dept: 4.6%","<b>deli<\/b><br>Hour: 9:00<br>Orders: 2,769<br>% of dept: 6.3%","<b>deli<\/b><br>Hour: 10:00<br>Orders: 3,513<br>% of dept: 7.9%","<b>deli<\/b><br>Hour: 11:00<br>Orders: 3,650<br>% of dept: 8.2%","<b>deli<\/b><br>Hour: 12:00<br>Orders: 3,691<br>% of dept: 8.3%","<b>deli<\/b><br>Hour: 13:00<br>Orders: 3,779<br>% of dept: 8.5%","<b>deli<\/b><br>Hour: 14:00<br>Orders: 3,756<br>% of dept: 8.5%","<b>deli<\/b><br>Hour: 15:00<br>Orders: 3,666<br>% of dept: 8.3%","<b>deli<\/b><br>Hour: 16:00<br>Orders: 3,757<br>% of dept: 8.5%","<b>deli<\/b><br>Hour: 17:00<br>Orders: 3,211<br>% of dept: 7.2%","<b>deli<\/b><br>Hour: 18:00<br>Orders: 2,570<br>% of dept: 5.8%","<b>deli<\/b><br>Hour: 19:00<br>Orders: 1,862<br>% of dept: 4.2%","<b>deli<\/b><br>Hour: 20:00<br>Orders: 1,249<br>% of dept: 2.8%","<b>deli<\/b><br>Hour: 21:00<br>Orders: 1,068<br>% of dept: 2.4%","<b>deli<\/b><br>Hour: 22:00<br>Orders: 820<br>% of dept: 1.9%","<b>deli<\/b><br>Hour: 23:00<br>Orders: 528<br>% of dept: 1.2%"],"hovertemplate":["%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>"],"type":"scatter","name":"deli","textfont":{"color":"rgba(215,144,197,1)","size":[14.001412828482621,12.71376094942074,11.426109070358859,11.093811811246114,10.844588866911558,11.495337666007346,15.510596213619667,25.645662616558347,38.092964114156544,48.324950551003113,58.626165583498164,60.52302910426674,61.090703588584347,62.309126871997741,61.990675332014689,60.744560610341907,62.004521051144394,54.444758406329477,45.569652444193274,35.76688330036734,27.279457473862671,24.773382311387397,21.339643967222379,17.296693981350664]},"error_y":{"color":"rgba(215,144,197,1)","width":[]},"error_x":{"color":"rgba(215,144,197,1)","width":[]},"line":{"color":"rgba(215,144,197,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],"y":["dry goods pasta","dry goods pasta","dry goods pasta","dry goods pasta","dry goods pasta","dry goods pasta","dry goods pasta","dry goods pasta","dry goods pasta","dry goods pasta","dry goods pasta","dry goods pasta","dry goods pasta","dry goods pasta","dry goods pasta","dry goods pasta","dry goods pasta","dry goods pasta","dry goods pasta","dry goods pasta","dry goods pasta","dry goods pasta","dry goods pasta","dry goods pasta"],"mode":"markers","marker":{"color":"rgba(224,152,180,1)","size":[13.461429782424414,12.159932184232833,11.190731845153998,10.816897428652162,11.010737496467929,11.370726193840067,14.347555806725063,22.03192992370726,34.603842893472731,43.105114439107091,50.775642836959591,54.818592822831313,53.323255156823961,56.272393331449564,56.798530658378077,56.092398982763491,55.178581520203444,49.93105397004804,40.709805029669397,32.042384854478669,26.047188471319579,23.388810398417633,19.622774795139868,16.576716586606388],"sizemode":"area","opacity":0.69999999999999996,"line":{"color":"rgba(224,152,180,1)"}},"text":["<b>dry goods pasta<\/b><br>Hour: 0:00<br>Orders: 251<br>% of dept: 0.6%","<b>dry goods pasta<\/b><br>Hour: 1:00<br>Orders: 157<br>% of dept: 0.4%","<b>dry goods pasta<\/b><br>Hour: 2:00<br>Orders: 87<br>% of dept: 0.2%","<b>dry goods pasta<\/b><br>Hour: 3:00<br>Orders: 60<br>% of dept: 0.2%","<b>dry goods pasta<\/b><br>Hour: 4:00<br>Orders: 74<br>% of dept: 0.2%","<b>dry goods pasta<\/b><br>Hour: 5:00<br>Orders: 100<br>% of dept: 0.3%","<b>dry goods pasta<\/b><br>Hour: 6:00<br>Orders: 315<br>% of dept: 0.8%","<b>dry goods pasta<\/b><br>Hour: 7:00<br>Orders: 870<br>% of dept: 2.2%","<b>dry goods pasta<\/b><br>Hour: 8:00<br>Orders: 1,778<br>% of dept: 4.6%","<b>dry goods pasta<\/b><br>Hour: 9:00<br>Orders: 2,392<br>% of dept: 6.2%","<b>dry goods pasta<\/b><br>Hour: 10:00<br>Orders: 2,946<br>% of dept: 7.6%","<b>dry goods pasta<\/b><br>Hour: 11:00<br>Orders: 3,238<br>% of dept: 8.4%","<b>dry goods pasta<\/b><br>Hour: 12:00<br>Orders: 3,130<br>% of dept: 8.1%","<b>dry goods pasta<\/b><br>Hour: 13:00<br>Orders: 3,343<br>% of dept: 8.6%","<b>dry goods pasta<\/b><br>Hour: 14:00<br>Orders: 3,381<br>% of dept: 8.7%","<b>dry goods pasta<\/b><br>Hour: 15:00<br>Orders: 3,330<br>% of dept: 8.6%","<b>dry goods pasta<\/b><br>Hour: 16:00<br>Orders: 3,264<br>% of dept: 8.4%","<b>dry goods pasta<\/b><br>Hour: 17:00<br>Orders: 2,885<br>% of dept: 7.5%","<b>dry goods pasta<\/b><br>Hour: 18:00<br>Orders: 2,219<br>% of dept: 5.7%","<b>dry goods pasta<\/b><br>Hour: 19:00<br>Orders: 1,593<br>% of dept: 4.1%","<b>dry goods pasta<\/b><br>Hour: 20:00<br>Orders: 1,160<br>% of dept: 3%","<b>dry goods pasta<\/b><br>Hour: 21:00<br>Orders: 968<br>% of dept: 2.5%","<b>dry goods pasta<\/b><br>Hour: 22:00<br>Orders: 696<br>% of dept: 1.8%","<b>dry goods pasta<\/b><br>Hour: 23:00<br>Orders: 476<br>% of dept: 1.2%"],"hovertemplate":["%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>"],"type":"scatter","name":"dry goods pasta","textfont":{"color":"rgba(224,152,180,1)","size":[13.461429782424414,12.159932184232833,11.190731845153998,10.816897428652162,11.010737496467929,11.370726193840067,14.347555806725063,22.03192992370726,34.603842893472731,43.105114439107091,50.775642836959591,54.818592822831313,53.323255156823961,56.272393331449564,56.798530658378077,56.092398982763491,55.178581520203444,49.93105397004804,40.709805029669397,32.042384854478669,26.047188471319579,23.388810398417633,19.622774795139868,16.576716586606388]},"error_y":{"color":"rgba(224,152,180,1)","width":[]},"error_x":{"color":"rgba(224,152,180,1)","width":[]},"line":{"color":"rgba(224,152,180,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],"y":["frozen","frozen","frozen","frozen","frozen","frozen","frozen","frozen","frozen","frozen","frozen","frozen","frozen","frozen","frozen","frozen","frozen","frozen","frozen","frozen","frozen","frozen","frozen","frozen"],"mode":"markers","marker":{"color":"rgba(205,180,144,1)","size":[19.56739191862108,15.981350664029387,13.655269850240181,12.616840915512856,12.65837807290195,13.77988132240746,21.893472732410288,43.257417349533767,69.633512291607801,92.437411698219847,109.56456626165583,121.98417632099464,117.91353489686352,123.10567957050013,130.69313365357445,126.73325798248092,128.06244701893189,119.42271828200056,97.255721955354616,76.874823396439666,55.317038711500423,44.060469059056231,36.140717716869176,27.528680418197233],"sizemode":"area","opacity":0.69999999999999996,"line":{"color":"rgba(205,180,144,1)"}},"text":["<b>frozen<\/b><br>Hour: 0:00<br>Orders: 692<br>% of dept: 0.7%","<b>frozen<\/b><br>Hour: 1:00<br>Orders: 433<br>% of dept: 0.4%","<b>frozen<\/b><br>Hour: 2:00<br>Orders: 265<br>% of dept: 0.3%","<b>frozen<\/b><br>Hour: 3:00<br>Orders: 190<br>% of dept: 0.2%","<b>frozen<\/b><br>Hour: 4:00<br>Orders: 193<br>% of dept: 0.2%","<b>frozen<\/b><br>Hour: 5:00<br>Orders: 274<br>% of dept: 0.3%","<b>frozen<\/b><br>Hour: 6:00<br>Orders: 860<br>% of dept: 0.9%","<b>frozen<\/b><br>Hour: 7:00<br>Orders: 2,403<br>% of dept: 2.4%","<b>frozen<\/b><br>Hour: 8:00<br>Orders: 4,308<br>% of dept: 4.3%","<b>frozen<\/b><br>Hour: 9:00<br>Orders: 5,955<br>% of dept: 5.9%","<b>frozen<\/b><br>Hour: 10:00<br>Orders: 7,192<br>% of dept: 7.2%","<b>frozen<\/b><br>Hour: 11:00<br>Orders: 8,089<br>% of dept: 8.1%","<b>frozen<\/b><br>Hour: 12:00<br>Orders: 7,795<br>% of dept: 7.8%","<b>frozen<\/b><br>Hour: 13:00<br>Orders: 8,170<br>% of dept: 8.1%","<b>frozen<\/b><br>Hour: 14:00<br>Orders: 8,718<br>% of dept: 8.7%","<b>frozen<\/b><br>Hour: 15:00<br>Orders: 8,432<br>% of dept: 8.4%","<b>frozen<\/b><br>Hour: 16:00<br>Orders: 8,528<br>% of dept: 8.5%","<b>frozen<\/b><br>Hour: 17:00<br>Orders: 7,904<br>% of dept: 7.9%","<b>frozen<\/b><br>Hour: 18:00<br>Orders: 6,303<br>% of dept: 6.3%","<b>frozen<\/b><br>Hour: 19:00<br>Orders: 4,831<br>% of dept: 4.8%","<b>frozen<\/b><br>Hour: 20:00<br>Orders: 3,274<br>% of dept: 3.3%","<b>frozen<\/b><br>Hour: 21:00<br>Orders: 2,461<br>% of dept: 2.5%","<b>frozen<\/b><br>Hour: 22:00<br>Orders: 1,889<br>% of dept: 1.9%","<b>frozen<\/b><br>Hour: 23:00<br>Orders: 1,267<br>% of dept: 1.3%"],"hovertemplate":["%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>"],"type":"scatter","name":"frozen","textfont":{"color":"rgba(205,180,144,1)","size":[19.56739191862108,15.981350664029387,13.655269850240181,12.616840915512856,12.65837807290195,13.77988132240746,21.893472732410288,43.257417349533767,69.633512291607801,92.437411698219847,109.56456626165583,121.98417632099464,117.91353489686352,123.10567957050013,130.69313365357445,126.73325798248092,128.06244701893189,119.42271828200056,97.255721955354616,76.874823396439666,55.317038711500423,44.060469059056231,36.140717716869176,27.528680418197233]},"error_y":{"color":"rgba(205,180,144,1)","width":[]},"error_x":{"color":"rgba(205,180,144,1)","width":[]},"line":{"color":"rgba(205,180,144,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],"y":["household","household","household","household","household","household","household","household","household","household","household","household","household","household","household","household","household","household","household","household","household","household","household","household"],"mode":"markers","marker":{"color":"rgba(180,206,104,1)","size":[13.295281152868043,11.841480644249788,11.246114721672789,10.803051709522464,11.550720542526138,11.384571912969765,14.361401525854761,23.458038994066122,34.991523029104272,47.092681548460021,53.697089573325798,51.855608929076006,50.858717151737778,49.82028821701045,49.335688047471031,49.66798530658378,46.095789771121787,44.392766318168974,39.380615993218427,31.488556089290761,24.967222379203164,22.198078553263635,18.487425826504662,15.649053404916643],"sizemode":"area","opacity":0.69999999999999996,"line":{"color":"rgba(180,206,104,1)"}},"text":["<b>household<\/b><br>Hour: 0:00<br>Orders: 239<br>% of dept: 0.7%","<b>household<\/b><br>Hour: 1:00<br>Orders: 134<br>% of dept: 0.4%","<b>household<\/b><br>Hour: 2:00<br>Orders: 91<br>% of dept: 0.3%","<b>household<\/b><br>Hour: 3:00<br>Orders: 59<br>% of dept: 0.2%","<b>household<\/b><br>Hour: 4:00<br>Orders: 113<br>% of dept: 0.3%","<b>household<\/b><br>Hour: 5:00<br>Orders: 101<br>% of dept: 0.3%","<b>household<\/b><br>Hour: 6:00<br>Orders: 316<br>% of dept: 0.9%","<b>household<\/b><br>Hour: 7:00<br>Orders: 973<br>% of dept: 2.7%","<b>household<\/b><br>Hour: 8:00<br>Orders: 1,806<br>% of dept: 5%","<b>household<\/b><br>Hour: 9:00<br>Orders: 2,680<br>% of dept: 7.4%","<b>household<\/b><br>Hour: 10:00<br>Orders: 3,157<br>% of dept: 8.8%","<b>household<\/b><br>Hour: 11:00<br>Orders: 3,024<br>% of dept: 8.4%","<b>household<\/b><br>Hour: 12:00<br>Orders: 2,952<br>% of dept: 8.2%","<b>household<\/b><br>Hour: 13:00<br>Orders: 2,877<br>% of dept: 8%","<b>household<\/b><br>Hour: 14:00<br>Orders: 2,842<br>% of dept: 7.9%","<b>household<\/b><br>Hour: 15:00<br>Orders: 2,866<br>% of dept: 8%","<b>household<\/b><br>Hour: 16:00<br>Orders: 2,608<br>% of dept: 7.2%","<b>household<\/b><br>Hour: 17:00<br>Orders: 2,485<br>% of dept: 6.9%","<b>household<\/b><br>Hour: 18:00<br>Orders: 2,123<br>% of dept: 5.9%","<b>household<\/b><br>Hour: 19:00<br>Orders: 1,553<br>% of dept: 4.3%","<b>household<\/b><br>Hour: 20:00<br>Orders: 1,082<br>% of dept: 3%","<b>household<\/b><br>Hour: 21:00<br>Orders: 882<br>% of dept: 2.5%","<b>household<\/b><br>Hour: 22:00<br>Orders: 614<br>% of dept: 1.7%","<b>household<\/b><br>Hour: 23:00<br>Orders: 409<br>% of dept: 1.1%"],"hovertemplate":["%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>"],"type":"scatter","name":"household","textfont":{"color":"rgba(180,206,104,1)","size":[13.295281152868043,11.841480644249788,11.246114721672789,10.803051709522464,11.550720542526138,11.384571912969765,14.361401525854761,23.458038994066122,34.991523029104272,47.092681548460021,53.697089573325798,51.855608929076006,50.858717151737778,49.82028821701045,49.335688047471031,49.66798530658378,46.095789771121787,44.392766318168974,39.380615993218427,31.488556089290761,24.967222379203164,22.198078553263635,18.487425826504662,15.649053404916643]},"error_y":{"color":"rgba(180,206,104,1)","width":[]},"error_x":{"color":"rgba(180,206,104,1)","width":[]},"line":{"color":"rgba(180,206,104,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],"y":["international","international","international","international","international","international","international","international","international","international","international","international","international","international","international","international","international","international","international","international","international","international","international","international"],"mode":"markers","marker":{"color":"rgba(186,217,78,1)","size":[11.038428934727325,10.678440237355185,10.332297259112744,10.429217293020628,10.359988697372138,10.429217293020628,10.996891777338231,13.378355467646228,17.116699632664595,20.315060751624753,22.654987284543658,23.998022040124329,23.153433173212772,25.022605255721956,24.067250635772815,24.371856456626166,24.03955919751342,22.239615710652728,19.041254591692567,17.01977959875671,14.167561458038994,14.278327211076576,13.502966939813508,11.827634925120091],"sizemode":"area","opacity":0.69999999999999996,"line":{"color":"rgba(186,217,78,1)"}},"text":["<b>international<\/b><br>Hour: 0:00<br>Orders: 76<br>% of dept: 0.6%","<b>international<\/b><br>Hour: 1:00<br>Orders: 50<br>% of dept: 0.4%","<b>international<\/b><br>Hour: 2:00<br>Orders: 25<br>% of dept: 0.2%","<b>international<\/b><br>Hour: 3:00<br>Orders: 32<br>% of dept: 0.3%","<b>international<\/b><br>Hour: 4:00<br>Orders: 27<br>% of dept: 0.2%","<b>international<\/b><br>Hour: 5:00<br>Orders: 32<br>% of dept: 0.3%","<b>international<\/b><br>Hour: 6:00<br>Orders: 73<br>% of dept: 0.6%","<b>international<\/b><br>Hour: 7:00<br>Orders: 245<br>% of dept: 2.1%","<b>international<\/b><br>Hour: 8:00<br>Orders: 515<br>% of dept: 4.3%","<b>international<\/b><br>Hour: 9:00<br>Orders: 746<br>% of dept: 6.3%","<b>international<\/b><br>Hour: 10:00<br>Orders: 915<br>% of dept: 7.7%","<b>international<\/b><br>Hour: 11:00<br>Orders: 1,012<br>% of dept: 8.5%","<b>international<\/b><br>Hour: 12:00<br>Orders: 951<br>% of dept: 8%","<b>international<\/b><br>Hour: 13:00<br>Orders: 1,086<br>% of dept: 9.1%","<b>international<\/b><br>Hour: 14:00<br>Orders: 1,017<br>% of dept: 8.5%","<b>international<\/b><br>Hour: 15:00<br>Orders: 1,039<br>% of dept: 8.7%","<b>international<\/b><br>Hour: 16:00<br>Orders: 1,015<br>% of dept: 8.5%","<b>international<\/b><br>Hour: 17:00<br>Orders: 885<br>% of dept: 7.4%","<b>international<\/b><br>Hour: 18:00<br>Orders: 654<br>% of dept: 5.5%","<b>international<\/b><br>Hour: 19:00<br>Orders: 508<br>% of dept: 4.3%","<b>international<\/b><br>Hour: 20:00<br>Orders: 302<br>% of dept: 2.5%","<b>international<\/b><br>Hour: 21:00<br>Orders: 310<br>% of dept: 2.6%","<b>international<\/b><br>Hour: 22:00<br>Orders: 254<br>% of dept: 2.1%","<b>international<\/b><br>Hour: 23:00<br>Orders: 133<br>% of dept: 1.1%"],"hovertemplate":["%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>"],"type":"scatter","name":"international","textfont":{"color":"rgba(186,217,78,1)","size":[11.038428934727325,10.678440237355185,10.332297259112744,10.429217293020628,10.359988697372138,10.429217293020628,10.996891777338231,13.378355467646228,17.116699632664595,20.315060751624753,22.654987284543658,23.998022040124329,23.153433173212772,25.022605255721956,24.067250635772815,24.371856456626166,24.03955919751342,22.239615710652728,19.041254591692567,17.01977959875671,14.167561458038994,14.278327211076576,13.502966939813508,11.827634925120091]},"error_y":{"color":"rgba(186,217,78,1)","width":[]},"error_x":{"color":"rgba(186,217,78,1)","width":[]},"line":{"color":"rgba(186,217,78,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],"y":["meat seafood","meat seafood","meat seafood","meat seafood","meat seafood","meat seafood","meat seafood","meat seafood","meat seafood","meat seafood","meat seafood","meat seafood","meat seafood","meat seafood","meat seafood","meat seafood","meat seafood","meat seafood","meat seafood","meat seafood","meat seafood","meat seafood","meat seafood","meat seafood"],"mode":"markers","marker":{"color":"rgba(217,217,66,1)","size":[12.589149477253461,11.647640576434021,11.052274653857022,10.539983046058209,10.678440237355185,11.273806159932183,13.392201186775925,21.007346708109637,30.00706414241311,36.085334840350384,42.662051426956765,45.085052274653854,44.835829330319299,45.071206555524157,46.954224357163042,45.694263916360555,44.905057925967789,39.740604690590558,33.925402656117548,27.182537439954789,22.530375812376377,19.512009042102289,17.587454083074313,15.330601864933598],"sizemode":"area","opacity":0.69999999999999996,"line":{"color":"rgba(217,217,66,1)"}},"text":["<b>meat seafood<\/b><br>Hour: 0:00<br>Orders: 188<br>% of dept: 0.6%","<b>meat seafood<\/b><br>Hour: 1:00<br>Orders: 120<br>% of dept: 0.4%","<b>meat seafood<\/b><br>Hour: 2:00<br>Orders: 77<br>% of dept: 0.3%","<b>meat seafood<\/b><br>Hour: 3:00<br>Orders: 40<br>% of dept: 0.1%","<b>meat seafood<\/b><br>Hour: 4:00<br>Orders: 50<br>% of dept: 0.2%","<b>meat seafood<\/b><br>Hour: 5:00<br>Orders: 93<br>% of dept: 0.3%","<b>meat seafood<\/b><br>Hour: 6:00<br>Orders: 246<br>% of dept: 0.8%","<b>meat seafood<\/b><br>Hour: 7:00<br>Orders: 796<br>% of dept: 2.6%","<b>meat seafood<\/b><br>Hour: 8:00<br>Orders: 1,446<br>% of dept: 4.8%","<b>meat seafood<\/b><br>Hour: 9:00<br>Orders: 1,885<br>% of dept: 6.2%","<b>meat seafood<\/b><br>Hour: 10:00<br>Orders: 2,360<br>% of dept: 7.8%","<b>meat seafood<\/b><br>Hour: 11:00<br>Orders: 2,535<br>% of dept: 8.4%","<b>meat seafood<\/b><br>Hour: 12:00<br>Orders: 2,517<br>% of dept: 8.3%","<b>meat seafood<\/b><br>Hour: 13:00<br>Orders: 2,534<br>% of dept: 8.4%","<b>meat seafood<\/b><br>Hour: 14:00<br>Orders: 2,670<br>% of dept: 8.8%","<b>meat seafood<\/b><br>Hour: 15:00<br>Orders: 2,579<br>% of dept: 8.5%","<b>meat seafood<\/b><br>Hour: 16:00<br>Orders: 2,522<br>% of dept: 8.3%","<b>meat seafood<\/b><br>Hour: 17:00<br>Orders: 2,149<br>% of dept: 7.1%","<b>meat seafood<\/b><br>Hour: 18:00<br>Orders: 1,729<br>% of dept: 5.7%","<b>meat seafood<\/b><br>Hour: 19:00<br>Orders: 1,242<br>% of dept: 4.1%","<b>meat seafood<\/b><br>Hour: 20:00<br>Orders: 906<br>% of dept: 3%","<b>meat seafood<\/b><br>Hour: 21:00<br>Orders: 688<br>% of dept: 2.3%","<b>meat seafood<\/b><br>Hour: 22:00<br>Orders: 549<br>% of dept: 1.8%","<b>meat seafood<\/b><br>Hour: 23:00<br>Orders: 386<br>% of dept: 1.3%"],"hovertemplate":["%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>"],"type":"scatter","name":"meat seafood","textfont":{"color":"rgba(217,217,66,1)","size":[12.589149477253461,11.647640576434021,11.052274653857022,10.539983046058209,10.678440237355185,11.273806159932183,13.392201186775925,21.007346708109637,30.00706414241311,36.085334840350384,42.662051426956765,45.085052274653854,44.835829330319299,45.071206555524157,46.954224357163042,45.694263916360555,44.905057925967789,39.740604690590558,33.925402656117548,27.182537439954789,22.530375812376377,19.512009042102289,17.587454083074313,15.330601864933598]},"error_y":{"color":"rgba(217,217,66,1)","width":[]},"error_x":{"color":"rgba(217,217,66,1)","width":[]},"line":{"color":"rgba(217,217,66,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],"y":["missing","missing","missing","missing","missing","missing","missing","missing","missing","missing","missing","missing","missing","missing","missing","missing","missing","missing","missing","missing","missing","missing","missing","missing"],"mode":"markers","marker":{"color":"rgba(247,217,52,1)","size":[10.913817462560045,10.539983046058209,10.166148629556371,10.193840067815767,10.166148629556371,10.332297259112744,10.955354619949139,12.824526702458321,15.067533201469342,17.462842610907035,19.165866063859848,19.193557502119244,19.387397569935011,19.110483187341057,19.636620514269566,19.692003390788358,18.999717434303477,17.767448431760386,17.01977959875671,14.804464538005085,13.226052557219553,12.782989545069228,12.575303758123763,11.924554959027974],"sizemode":"area","opacity":0.69999999999999996,"line":{"color":"rgba(247,217,52,1)"}},"text":["<b>missing<\/b><br>Hour: 0:00<br>Orders: 67<br>% of dept: 0.8%","<b>missing<\/b><br>Hour: 1:00<br>Orders: 40<br>% of dept: 0.5%","<b>missing<\/b><br>Hour: 2:00<br>Orders: 13<br>% of dept: 0.2%","<b>missing<\/b><br>Hour: 3:00<br>Orders: 15<br>% of dept: 0.2%","<b>missing<\/b><br>Hour: 4:00<br>Orders: 13<br>% of dept: 0.2%","<b>missing<\/b><br>Hour: 5:00<br>Orders: 25<br>% of dept: 0.3%","<b>missing<\/b><br>Hour: 6:00<br>Orders: 70<br>% of dept: 0.8%","<b>missing<\/b><br>Hour: 7:00<br>Orders: 205<br>% of dept: 2.5%","<b>missing<\/b><br>Hour: 8:00<br>Orders: 367<br>% of dept: 4.4%","<b>missing<\/b><br>Hour: 9:00<br>Orders: 540<br>% of dept: 6.5%","<b>missing<\/b><br>Hour: 10:00<br>Orders: 663<br>% of dept: 8%","<b>missing<\/b><br>Hour: 11:00<br>Orders: 665<br>% of dept: 8.1%","<b>missing<\/b><br>Hour: 12:00<br>Orders: 679<br>% of dept: 8.2%","<b>missing<\/b><br>Hour: 13:00<br>Orders: 659<br>% of dept: 8%","<b>missing<\/b><br>Hour: 14:00<br>Orders: 697<br>% of dept: 8.4%","<b>missing<\/b><br>Hour: 15:00<br>Orders: 701<br>% of dept: 8.5%","<b>missing<\/b><br>Hour: 16:00<br>Orders: 651<br>% of dept: 7.9%","<b>missing<\/b><br>Hour: 17:00<br>Orders: 562<br>% of dept: 6.8%","<b>missing<\/b><br>Hour: 18:00<br>Orders: 508<br>% of dept: 6.2%","<b>missing<\/b><br>Hour: 19:00<br>Orders: 348<br>% of dept: 4.2%","<b>missing<\/b><br>Hour: 20:00<br>Orders: 234<br>% of dept: 2.8%","<b>missing<\/b><br>Hour: 21:00<br>Orders: 202<br>% of dept: 2.4%","<b>missing<\/b><br>Hour: 22:00<br>Orders: 187<br>% of dept: 2.3%","<b>missing<\/b><br>Hour: 23:00<br>Orders: 140<br>% of dept: 1.7%"],"hovertemplate":["%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>"],"type":"scatter","name":"missing","textfont":{"color":"rgba(247,217,52,1)","size":[10.913817462560045,10.539983046058209,10.166148629556371,10.193840067815767,10.166148629556371,10.332297259112744,10.955354619949139,12.824526702458321,15.067533201469342,17.462842610907035,19.165866063859848,19.193557502119244,19.387397569935011,19.110483187341057,19.636620514269566,19.692003390788358,18.999717434303477,17.767448431760386,17.01977959875671,14.804464538005085,13.226052557219553,12.782989545069228,12.575303758123763,11.924554959027974]},"error_y":{"color":"rgba(247,217,52,1)","width":[]},"error_x":{"color":"rgba(247,217,52,1)","width":[]},"line":{"color":"rgba(247,217,52,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],"y":["other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other"],"mode":"markers","marker":{"color":"rgba(250,212,80,1)","size":[10.179994348686069,10.124611472167279,10.069228595648488,10.013845719129698,10.027691438259396,10.083074314778186,10.179994348686069,10.526137326928511,11.06612037298672,11.343034755580673,11.855326363379486,11.869172082509184,11.924554959027974,11.758406329471603,12.589149477253461,12.173777903362531,11.95224639728737,12.035320712065555,11.439954789488556,11.024583215597627,10.719977394744278,10.70613167561458,10.429217293020628,10.429217293020628],"sizemode":"area","opacity":0.69999999999999996,"line":{"color":"rgba(250,212,80,1)"}},"text":["<b>other<\/b><br>Hour: 0:00<br>Orders: 14<br>% of dept: 0.8%","<b>other<\/b><br>Hour: 1:00<br>Orders: 10<br>% of dept: 0.6%","<b>other<\/b><br>Hour: 2:00<br>Orders: 6<br>% of dept: 0.3%","<b>other<\/b><br>Hour: 3:00<br>Orders: 2<br>% of dept: 0.1%","<b>other<\/b><br>Hour: 4:00<br>Orders: 3<br>% of dept: 0.2%","<b>other<\/b><br>Hour: 5:00<br>Orders: 7<br>% of dept: 0.4%","<b>other<\/b><br>Hour: 6:00<br>Orders: 14<br>% of dept: 0.8%","<b>other<\/b><br>Hour: 7:00<br>Orders: 39<br>% of dept: 2.2%","<b>other<\/b><br>Hour: 8:00<br>Orders: 78<br>% of dept: 4.3%","<b>other<\/b><br>Hour: 9:00<br>Orders: 98<br>% of dept: 5.5%","<b>other<\/b><br>Hour: 10:00<br>Orders: 135<br>% of dept: 7.5%","<b>other<\/b><br>Hour: 11:00<br>Orders: 136<br>% of dept: 7.6%","<b>other<\/b><br>Hour: 12:00<br>Orders: 140<br>% of dept: 7.8%","<b>other<\/b><br>Hour: 13:00<br>Orders: 128<br>% of dept: 7.1%","<b>other<\/b><br>Hour: 14:00<br>Orders: 188<br>% of dept: 10.5%","<b>other<\/b><br>Hour: 15:00<br>Orders: 158<br>% of dept: 8.8%","<b>other<\/b><br>Hour: 16:00<br>Orders: 142<br>% of dept: 7.9%","<b>other<\/b><br>Hour: 17:00<br>Orders: 148<br>% of dept: 8.2%","<b>other<\/b><br>Hour: 18:00<br>Orders: 105<br>% of dept: 5.8%","<b>other<\/b><br>Hour: 19:00<br>Orders: 75<br>% of dept: 4.2%","<b>other<\/b><br>Hour: 20:00<br>Orders: 53<br>% of dept: 3%","<b>other<\/b><br>Hour: 21:00<br>Orders: 52<br>% of dept: 2.9%","<b>other<\/b><br>Hour: 22:00<br>Orders: 32<br>% of dept: 1.8%","<b>other<\/b><br>Hour: 23:00<br>Orders: 32<br>% of dept: 1.8%"],"hovertemplate":["%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>"],"type":"scatter","name":"other","textfont":{"color":"rgba(250,212,80,1)","size":[10.179994348686069,10.124611472167279,10.069228595648488,10.013845719129698,10.027691438259396,10.083074314778186,10.179994348686069,10.526137326928511,11.06612037298672,11.343034755580673,11.855326363379486,11.869172082509184,11.924554959027974,11.758406329471603,12.589149477253461,12.173777903362531,11.95224639728737,12.035320712065555,11.439954789488556,11.024583215597627,10.719977394744278,10.70613167561458,10.429217293020628,10.429217293020628]},"error_y":{"color":"rgba(250,212,80,1)","width":[]},"error_x":{"color":"rgba(250,212,80,1)","width":[]},"line":{"color":"rgba(250,212,80,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],"y":["pantry","pantry","pantry","pantry","pantry","pantry","pantry","pantry","pantry","pantry","pantry","pantry","pantry","pantry","pantry","pantry","pantry","pantry","pantry","pantry","pantry","pantry","pantry","pantry"],"mode":"markers","marker":{"color":"rgba(241,204,114,1)","size":[17.808985589149476,14.832155976264481,12.769143825939532,11.869172082509184,11.924554959027974,13.253743995478949,18.445888669115568,36.279174908166148,62.046058208533481,82.23311669963266,100.63407742300085,105.24470189319017,106.06159932184234,105.45238768013563,108.66459451822548,106.06159932184234,98.044927945747389,88.076010172365073,71.654987284543665,56.383159084487147,41.623622492229444,37.816049731562586,32.097767730997461,25.244136761797119],"sizemode":"area","opacity":0.69999999999999996,"line":{"color":"rgba(241,204,114,1)"}},"text":["<b>pantry<\/b><br>Hour: 0:00<br>Orders: 565<br>% of dept: 0.7%","<b>pantry<\/b><br>Hour: 1:00<br>Orders: 350<br>% of dept: 0.4%","<b>pantry<\/b><br>Hour: 2:00<br>Orders: 201<br>% of dept: 0.2%","<b>pantry<\/b><br>Hour: 3:00<br>Orders: 136<br>% of dept: 0.2%","<b>pantry<\/b><br>Hour: 4:00<br>Orders: 140<br>% of dept: 0.2%","<b>pantry<\/b><br>Hour: 5:00<br>Orders: 236<br>% of dept: 0.3%","<b>pantry<\/b><br>Hour: 6:00<br>Orders: 611<br>% of dept: 0.8%","<b>pantry<\/b><br>Hour: 7:00<br>Orders: 1,899<br>% of dept: 2.3%","<b>pantry<\/b><br>Hour: 8:00<br>Orders: 3,760<br>% of dept: 4.6%","<b>pantry<\/b><br>Hour: 9:00<br>Orders: 5,218<br>% of dept: 6.4%","<b>pantry<\/b><br>Hour: 10:00<br>Orders: 6,547<br>% of dept: 8.1%","<b>pantry<\/b><br>Hour: 11:00<br>Orders: 6,880<br>% of dept: 8.5%","<b>pantry<\/b><br>Hour: 12:00<br>Orders: 6,939<br>% of dept: 8.5%","<b>pantry<\/b><br>Hour: 13:00<br>Orders: 6,895<br>% of dept: 8.5%","<b>pantry<\/b><br>Hour: 14:00<br>Orders: 7,127<br>% of dept: 8.8%","<b>pantry<\/b><br>Hour: 15:00<br>Orders: 6,939<br>% of dept: 8.5%","<b>pantry<\/b><br>Hour: 16:00<br>Orders: 6,360<br>% of dept: 7.8%","<b>pantry<\/b><br>Hour: 17:00<br>Orders: 5,640<br>% of dept: 6.9%","<b>pantry<\/b><br>Hour: 18:00<br>Orders: 4,454<br>% of dept: 5.5%","<b>pantry<\/b><br>Hour: 19:00<br>Orders: 3,351<br>% of dept: 4.1%","<b>pantry<\/b><br>Hour: 20:00<br>Orders: 2,285<br>% of dept: 2.8%","<b>pantry<\/b><br>Hour: 21:00<br>Orders: 2,010<br>% of dept: 2.5%","<b>pantry<\/b><br>Hour: 22:00<br>Orders: 1,597<br>% of dept: 2%","<b>pantry<\/b><br>Hour: 23:00<br>Orders: 1,102<br>% of dept: 1.4%"],"hovertemplate":["%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>"],"type":"scatter","name":"pantry","textfont":{"color":"rgba(241,204,114,1)","size":[17.808985589149476,14.832155976264481,12.769143825939532,11.869172082509184,11.924554959027974,13.253743995478949,18.445888669115568,36.279174908166148,62.046058208533481,82.23311669963266,100.63407742300085,105.24470189319017,106.06159932184234,105.45238768013563,108.66459451822548,106.06159932184234,98.044927945747389,88.076010172365073,71.654987284543665,56.383159084487147,41.623622492229444,37.816049731562586,32.097767730997461,25.244136761797119]},"error_y":{"color":"rgba(241,204,114,1)","width":[]},"error_x":{"color":"rgba(241,204,114,1)","width":[]},"line":{"color":"rgba(241,204,114,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],"y":["personal care","personal care","personal care","personal care","personal care","personal care","personal care","personal care","personal care","personal care","personal care","personal care","personal care","personal care","personal care","personal care","personal care","personal care","personal care","personal care","personal care","personal care","personal care","personal care"],"mode":"markers","marker":{"color":"rgba(231,197,144,1)","size":[12.159932184232833,11.384571912969765,10.816897428652162,10.498445888669115,10.512291607798813,11.301497598191579,12.824526702458321,18.390505792596777,24.205707827069794,30.367052839785249,32.748516530093241,34.41000282565696,32.73467081096355,33.468493924837524,34.922294433455775,34.050014128284829,32.970048036168407,32.305453517942922,27.805594800791184,24.496467928793443,19.387397569935011,17.241311104831873,15.856739191862108,13.461429782424414],"sizemode":"area","opacity":0.69999999999999996,"line":{"color":"rgba(231,197,144,1)"}},"text":["<b>personal care<\/b><br>Hour: 0:00<br>Orders: 157<br>% of dept: 0.7%","<b>personal care<\/b><br>Hour: 1:00<br>Orders: 101<br>% of dept: 0.5%","<b>personal care<\/b><br>Hour: 2:00<br>Orders: 60<br>% of dept: 0.3%","<b>personal care<\/b><br>Hour: 3:00<br>Orders: 37<br>% of dept: 0.2%","<b>personal care<\/b><br>Hour: 4:00<br>Orders: 38<br>% of dept: 0.2%","<b>personal care<\/b><br>Hour: 5:00<br>Orders: 95<br>% of dept: 0.4%","<b>personal care<\/b><br>Hour: 6:00<br>Orders: 205<br>% of dept: 1%","<b>personal care<\/b><br>Hour: 7:00<br>Orders: 607<br>% of dept: 2.8%","<b>personal care<\/b><br>Hour: 8:00<br>Orders: 1,027<br>% of dept: 4.8%","<b>personal care<\/b><br>Hour: 9:00<br>Orders: 1,472<br>% of dept: 6.8%","<b>personal care<\/b><br>Hour: 10:00<br>Orders: 1,644<br>% of dept: 7.6%","<b>personal care<\/b><br>Hour: 11:00<br>Orders: 1,764<br>% of dept: 8.2%","<b>personal care<\/b><br>Hour: 12:00<br>Orders: 1,643<br>% of dept: 7.6%","<b>personal care<\/b><br>Hour: 13:00<br>Orders: 1,696<br>% of dept: 7.9%","<b>personal care<\/b><br>Hour: 14:00<br>Orders: 1,801<br>% of dept: 8.3%","<b>personal care<\/b><br>Hour: 15:00<br>Orders: 1,738<br>% of dept: 8.1%","<b>personal care<\/b><br>Hour: 16:00<br>Orders: 1,660<br>% of dept: 7.7%","<b>personal care<\/b><br>Hour: 17:00<br>Orders: 1,612<br>% of dept: 7.5%","<b>personal care<\/b><br>Hour: 18:00<br>Orders: 1,287<br>% of dept: 6%","<b>personal care<\/b><br>Hour: 19:00<br>Orders: 1,048<br>% of dept: 4.9%","<b>personal care<\/b><br>Hour: 20:00<br>Orders: 679<br>% of dept: 3.1%","<b>personal care<\/b><br>Hour: 21:00<br>Orders: 524<br>% of dept: 2.4%","<b>personal care<\/b><br>Hour: 22:00<br>Orders: 424<br>% of dept: 2%","<b>personal care<\/b><br>Hour: 23:00<br>Orders: 251<br>% of dept: 1.2%"],"hovertemplate":["%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>"],"type":"scatter","name":"personal care","textfont":{"color":"rgba(231,197,144,1)","size":[12.159932184232833,11.384571912969765,10.816897428652162,10.498445888669115,10.512291607798813,11.301497598191579,12.824526702458321,18.390505792596777,24.205707827069794,30.367052839785249,32.748516530093241,34.41000282565696,32.73467081096355,33.468493924837524,34.922294433455775,34.050014128284829,32.970048036168407,32.305453517942922,27.805594800791184,24.496467928793443,19.387397569935011,17.241311104831873,15.856739191862108,13.461429782424414]},"error_y":{"color":"rgba(231,197,144,1)","width":[]},"error_x":{"color":"rgba(231,197,144,1)","width":[]},"line":{"color":"rgba(231,197,144,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],"y":["pets","pets","pets","pets","pets","pets","pets","pets","pets","pets","pets","pets","pets","pets","pets","pets","pets","pets","pets","pets","pets","pets","pets","pets"],"mode":"markers","marker":{"color":"rgba(215,191,158,1)","size":[10.775360271263068,10.235377225204861,10.096920033907884,10.069228595648488,10.263068663464255,10.207685786945465,10.539983046058209,11.412263351229161,12.755298106809834,13.41989262503532,14.942921729302062,15.219836111896015,14.7213902232269,15.095224639728738,15.178298954506921,14.915230291042668,14.873693133653575,14.749081661486295,14.832155976264481,12.852218140717717,12.00762927380616,11.53687482339644,10.816897428652162,10.41537157389093],"sizemode":"area","opacity":0.69999999999999996,"line":{"color":"rgba(215,191,158,1)"}},"text":["<b>pets<\/b><br>Hour: 0:00<br>Orders: 57<br>% of dept: 1.3%","<b>pets<\/b><br>Hour: 1:00<br>Orders: 18<br>% of dept: 0.4%","<b>pets<\/b><br>Hour: 2:00<br>Orders: 8<br>% of dept: 0.2%","<b>pets<\/b><br>Hour: 3:00<br>Orders: 6<br>% of dept: 0.1%","<b>pets<\/b><br>Hour: 4:00<br>Orders: 20<br>% of dept: 0.4%","<b>pets<\/b><br>Hour: 5:00<br>Orders: 16<br>% of dept: 0.4%","<b>pets<\/b><br>Hour: 6:00<br>Orders: 40<br>% of dept: 0.9%","<b>pets<\/b><br>Hour: 7:00<br>Orders: 103<br>% of dept: 2.3%","<b>pets<\/b><br>Hour: 8:00<br>Orders: 200<br>% of dept: 4.4%","<b>pets<\/b><br>Hour: 9:00<br>Orders: 248<br>% of dept: 5.5%","<b>pets<\/b><br>Hour: 10:00<br>Orders: 358<br>% of dept: 8%","<b>pets<\/b><br>Hour: 11:00<br>Orders: 378<br>% of dept: 8.4%","<b>pets<\/b><br>Hour: 12:00<br>Orders: 342<br>% of dept: 7.6%","<b>pets<\/b><br>Hour: 13:00<br>Orders: 369<br>% of dept: 8.2%","<b>pets<\/b><br>Hour: 14:00<br>Orders: 375<br>% of dept: 8.3%","<b>pets<\/b><br>Hour: 15:00<br>Orders: 356<br>% of dept: 7.9%","<b>pets<\/b><br>Hour: 16:00<br>Orders: 353<br>% of dept: 7.8%","<b>pets<\/b><br>Hour: 17:00<br>Orders: 344<br>% of dept: 7.6%","<b>pets<\/b><br>Hour: 18:00<br>Orders: 350<br>% of dept: 7.8%","<b>pets<\/b><br>Hour: 19:00<br>Orders: 207<br>% of dept: 4.6%","<b>pets<\/b><br>Hour: 20:00<br>Orders: 146<br>% of dept: 3.2%","<b>pets<\/b><br>Hour: 21:00<br>Orders: 112<br>% of dept: 2.5%","<b>pets<\/b><br>Hour: 22:00<br>Orders: 60<br>% of dept: 1.3%","<b>pets<\/b><br>Hour: 23:00<br>Orders: 31<br>% of dept: 0.7%"],"hovertemplate":["%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>"],"type":"scatter","name":"pets","textfont":{"color":"rgba(215,191,158,1)","size":[10.775360271263068,10.235377225204861,10.096920033907884,10.069228595648488,10.263068663464255,10.207685786945465,10.539983046058209,11.412263351229161,12.755298106809834,13.41989262503532,14.942921729302062,15.219836111896015,14.7213902232269,15.095224639728738,15.178298954506921,14.915230291042668,14.873693133653575,14.749081661486295,14.832155976264481,12.852218140717717,12.00762927380616,11.53687482339644,10.816897428652162,10.41537157389093]},"error_y":{"color":"rgba(215,191,158,1)","width":[]},"error_x":{"color":"rgba(215,191,158,1)","width":[]},"line":{"color":"rgba(215,191,158,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],"y":["produce","produce","produce","produce","produce","produce","produce","produce","produce","produce","produce","produce","produce","produce","produce","produce","produce","produce","produce","produce","produce","produce","produce","produce"],"mode":"markers","marker":{"color":"rgba(198,185,168,1)","size":[48.504944899689178,33.482339643967222,23.62418762362249,19.428934727324105,18.598191579542245,24.621079400960724,57.241593670528403,165.9166431195253,292.93727041537153,396.15710652726762,459.00282565696523,471.53320146934163,473.85928228313082,485.73890929641141,500,492.14947725346144,455.81831025713478,391.87877931619101,304.1661486295564,238.74512574173494,174.45945182254874,160.65526985024019,130.41621927098049,84.836111896015822],"sizemode":"area","opacity":0.69999999999999996,"line":{"color":"rgba(198,185,168,1)"}},"text":["<b>produce<\/b><br>Hour: 0:00<br>Orders: 2,782<br>% of dept: 0.7%","<b>produce<\/b><br>Hour: 1:00<br>Orders: 1,697<br>% of dept: 0.4%","<b>produce<\/b><br>Hour: 2:00<br>Orders: 985<br>% of dept: 0.2%","<b>produce<\/b><br>Hour: 3:00<br>Orders: 682<br>% of dept: 0.2%","<b>produce<\/b><br>Hour: 4:00<br>Orders: 622<br>% of dept: 0.2%","<b>produce<\/b><br>Hour: 5:00<br>Orders: 1,057<br>% of dept: 0.3%","<b>produce<\/b><br>Hour: 6:00<br>Orders: 3,413<br>% of dept: 0.8%","<b>produce<\/b><br>Hour: 7:00<br>Orders: 11,262<br>% of dept: 2.8%","<b>produce<\/b><br>Hour: 8:00<br>Orders: 20,436<br>% of dept: 5%","<b>produce<\/b><br>Hour: 9:00<br>Orders: 27,891<br>% of dept: 6.8%","<b>produce<\/b><br>Hour: 10:00<br>Orders: 32,430<br>% of dept: 7.9%","<b>produce<\/b><br>Hour: 11:00<br>Orders: 33,335<br>% of dept: 8.1%","<b>produce<\/b><br>Hour: 12:00<br>Orders: 33,503<br>% of dept: 8.2%","<b>produce<\/b><br>Hour: 13:00<br>Orders: 34,361<br>% of dept: 8.4%","<b>produce<\/b><br>Hour: 14:00<br>Orders: 35,391<br>% of dept: 8.7%","<b>produce<\/b><br>Hour: 15:00<br>Orders: 34,824<br>% of dept: 8.5%","<b>produce<\/b><br>Hour: 16:00<br>Orders: 32,200<br>% of dept: 7.9%","<b>produce<\/b><br>Hour: 17:00<br>Orders: 27,582<br>% of dept: 6.7%","<b>produce<\/b><br>Hour: 18:00<br>Orders: 21,247<br>% of dept: 5.2%","<b>produce<\/b><br>Hour: 19:00<br>Orders: 16,522<br>% of dept: 4%","<b>produce<\/b><br>Hour: 20:00<br>Orders: 11,879<br>% of dept: 2.9%","<b>produce<\/b><br>Hour: 21:00<br>Orders: 10,882<br>% of dept: 2.7%","<b>produce<\/b><br>Hour: 22:00<br>Orders: 8,698<br>% of dept: 2.1%","<b>produce<\/b><br>Hour: 23:00<br>Orders: 5,406<br>% of dept: 1.3%"],"hovertemplate":["%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>"],"type":"scatter","name":"produce","textfont":{"color":"rgba(198,185,168,1)","size":[48.504944899689178,33.482339643967222,23.62418762362249,19.428934727324105,18.598191579542245,24.621079400960724,57.241593670528403,165.9166431195253,292.93727041537153,396.15710652726762,459.00282565696523,471.53320146934163,473.85928228313082,485.73890929641141,500,492.14947725346144,455.81831025713478,391.87877931619101,304.1661486295564,238.74512574173494,174.45945182254874,160.65526985024019,130.41621927098049,84.836111896015822]},"error_y":{"color":"rgba(198,185,168,1)","width":[]},"error_x":{"color":"rgba(198,185,168,1)","width":[]},"line":{"color":"rgba(198,185,168,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],"y":["snacks","snacks","snacks","snacks","snacks","snacks","snacks","snacks","snacks","snacks","snacks","snacks","snacks","snacks","snacks","snacks","snacks","snacks","snacks","snacks","snacks","snacks","snacks","snacks"],"mode":"markers","marker":{"color":"rgba(179,179,179,1)","size":[20.495055100310822,16.285956484882735,13.364509748516531,12.796835264198926,12.672223792031648,13.987567109352925,22.738061599321842,50.443345577846848,89.100593387962689,124.4902514834699,147.22492229443347,151.79400960723368,142.90505792596781,143.47273241028537,155.11698219836111,147.18338513704435,142.15738909296411,126.60864651031365,99.429499858717151,78.647075445040969,57.020062164453236,48.504944899689178,40.66826787228031,28.290194970330603],"sizemode":"area","opacity":0.69999999999999996,"line":{"color":"rgba(179,179,179,1)"}},"text":["<b>snacks<\/b><br>Hour: 0:00<br>Orders: 759<br>% of dept: 0.6%","<b>snacks<\/b><br>Hour: 1:00<br>Orders: 455<br>% of dept: 0.4%","<b>snacks<\/b><br>Hour: 2:00<br>Orders: 244<br>% of dept: 0.2%","<b>snacks<\/b><br>Hour: 3:00<br>Orders: 203<br>% of dept: 0.2%","<b>snacks<\/b><br>Hour: 4:00<br>Orders: 194<br>% of dept: 0.2%","<b>snacks<\/b><br>Hour: 5:00<br>Orders: 289<br>% of dept: 0.2%","<b>snacks<\/b><br>Hour: 6:00<br>Orders: 921<br>% of dept: 0.8%","<b>snacks<\/b><br>Hour: 7:00<br>Orders: 2,922<br>% of dept: 2.5%","<b>snacks<\/b><br>Hour: 8:00<br>Orders: 5,714<br>% of dept: 4.8%","<b>snacks<\/b><br>Hour: 9:00<br>Orders: 8,270<br>% of dept: 7%","<b>snacks<\/b><br>Hour: 10:00<br>Orders: 9,912<br>% of dept: 8.3%","<b>snacks<\/b><br>Hour: 11:00<br>Orders: 10,242<br>% of dept: 8.6%","<b>snacks<\/b><br>Hour: 12:00<br>Orders: 9,600<br>% of dept: 8.1%","<b>snacks<\/b><br>Hour: 13:00<br>Orders: 9,641<br>% of dept: 8.1%","<b>snacks<\/b><br>Hour: 14:00<br>Orders: 10,482<br>% of dept: 8.8%","<b>snacks<\/b><br>Hour: 15:00<br>Orders: 9,909<br>% of dept: 8.3%","<b>snacks<\/b><br>Hour: 16:00<br>Orders: 9,546<br>% of dept: 8%","<b>snacks<\/b><br>Hour: 17:00<br>Orders: 8,423<br>% of dept: 7.1%","<b>snacks<\/b><br>Hour: 18:00<br>Orders: 6,460<br>% of dept: 5.4%","<b>snacks<\/b><br>Hour: 19:00<br>Orders: 4,959<br>% of dept: 4.2%","<b>snacks<\/b><br>Hour: 20:00<br>Orders: 3,397<br>% of dept: 2.9%","<b>snacks<\/b><br>Hour: 21:00<br>Orders: 2,782<br>% of dept: 2.3%","<b>snacks<\/b><br>Hour: 22:00<br>Orders: 2,216<br>% of dept: 1.9%","<b>snacks<\/b><br>Hour: 23:00<br>Orders: 1,322<br>% of dept: 1.1%"],"hovertemplate":["%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>"],"type":"scatter","name":"snacks","textfont":{"color":"rgba(179,179,179,1)","size":[20.495055100310822,16.285956484882735,13.364509748516531,12.796835264198926,12.672223792031648,13.987567109352925,22.738061599321842,50.443345577846848,89.100593387962689,124.4902514834699,147.22492229443347,151.79400960723368,142.90505792596781,143.47273241028537,155.11698219836111,147.18338513704435,142.15738909296411,126.60864651031365,99.429499858717151,78.647075445040969,57.020062164453236,48.504944899689178,40.66826787228031,28.290194970330603]},"error_y":{"color":"rgba(179,179,179,1)","width":[]},"error_x":{"color":"rgba(179,179,179,1)","width":[]},"line":{"color":"rgba(179,179,179,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="hour-order-trend-on-instacart" class="section level3">
+<h3>24-Hour Order Trend on Instacart</h3>
+<pre class="r"><code>hourly_orders =
+  instacart_df |&gt;
+  count(order_hour_of_day) |&gt;
+  mutate(
+    pct_of_total = round(n / sum(n) * 100, 1)
+  ) |&gt;
+  plot_ly(
+    x = ~order_hour_of_day,
+    y = ~n,
+    type = &quot;scatter&quot;,
+    mode = &quot;lines+markers&quot;,
+    line = list(
+      color = &quot;#1f77b4&quot;,
+      width = 3
+    ),
+    marker = list(
+      size = 8,
+      color = &quot;#1f77b4&quot;,
+      line = list(color = &quot;white&quot;, width = 2)
+    ),
+    text = ~paste0(
+      &quot;Hour: &quot;, order_hour_of_day, &quot;:00&lt;br&gt;&quot;,
+      &quot;Orders: &quot;, scales::comma(n), &quot;&lt;br&gt;&quot;,
+      &quot;Percentage: &quot;, pct_of_total, &quot;%&quot;
+    ),
+    hovertemplate = &quot;%{text}&lt;extra&gt;&lt;/extra&gt;&quot;
+  ) |&gt;
+  layout(
+    title = list(
+      text = &quot;&lt;b&gt;24-Hour Order Trend on Instacart&lt;/b&gt;&lt;br&gt;&lt;sub&gt;Shopping patterns throughout the day&lt;/sub&gt;&quot;,
+      font = list(size = 16)
+    ),
+    xaxis = list(
+      title = &quot;Hour of Day&quot;,
+      titlefont = list(size = 14),
+      tickmode = &quot;linear&quot;,
+      tick0 = 0,
+      dtick = 2,
+      range = c(-0.5, 23.5),
+      gridcolor = &quot;#E5E5E5&quot;
+    ),
+    yaxis = list(
+      title = &quot;Number of Orders&quot;,
+      titlefont = list(size = 14),
+      gridcolor = &quot;#E5E5E5&quot;,
+      tickformat = &quot;,&quot;
+    ),
+    plot_bgcolor = &quot;#FAFAFA&quot;,
+    paper_bgcolor = &quot;white&quot;,
+    margin = list(l = 80, r = 50, t = 100, b = 60),
+    hovermode = &quot;x unified&quot;,
+    shapes = list(
+      # Adding a shaded area for peak hours
+      list(
+        type = &quot;rect&quot;,
+        x0 = 10, x1 = 16.5,
+        y0 = 0, y1 = 1,
+        yref = &quot;paper&quot;,
+        fillcolor = &quot;rgba(255, 165, 0, 0.1)&quot;,
+        line = list(width = 0),
+        layer = &quot;below&quot;
+      )
+    ),
+    annotations = list(
+      list(
+        x = 13,
+        y = 1.05,
+        yref = &quot;paper&quot;,
+        text = &quot;Peak Hours&quot;,
+        showarrow = FALSE,
+        font = list(size = 11, color = &quot;#FF8C00&quot;)
+      )
+    )
+  )
+
+hourly_orders</code></pre>
+<div class="plotly html-widget html-fill-item" id="htmlwidget-1d71083c8076678959a4" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-1d71083c8076678959a4">{"x":{"visdat":{"54942edb25de":["function () ","plotlyVisDat"]},"cur_data":"54942edb25de","attrs":{"54942edb25de":{"x":{},"y":{},"mode":"lines+markers","line":{"color":"#1f77b4","width":3},"marker":{"size":8,"color":"#1f77b4","line":{"color":"white","width":2}},"text":{},"hovertemplate":"%{text}<extra><\/extra>","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":60,"l":80,"t":100,"r":50},"title":{"text":"<b>24-Hour Order Trend on Instacart<\/b><br><sub>Shopping patterns throughout the day<\/sub>","font":{"size":16}},"xaxis":{"domain":[0,1],"automargin":true,"title":"Hour of Day","titlefont":{"size":14},"tickmode":"linear","tick0":0,"dtick":2,"range":[-0.5,23.5],"gridcolor":"#E5E5E5"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Number of Orders","titlefont":{"size":14},"gridcolor":"#E5E5E5","tickformat":","},"plot_bgcolor":"#FAFAFA","paper_bgcolor":"white","hovermode":"x unified","shapes":[{"type":"rect","x0":10,"x1":16.5,"y0":0,"y1":1,"yref":"paper","fillcolor":"rgba(255, 165, 0, 0.1)","line":{"width":0},"layer":"below"}],"annotations":[{"x":13,"y":1.05,"yref":"paper","text":"Peak Hours","showarrow":false,"font":{"size":11,"color":"#FF8C00"}}],"showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],"y":[9083,5626,3226,2438,2431,3847,11847,36302,67386,93856,110479,114119,111752,114762,119370,116198,110237,96944,76522,58175,40920,34813,27319,16965],"mode":"lines+markers","line":{"color":"#1f77b4","width":3},"marker":{"color":"#1f77b4","size":8,"line":{"color":"white","width":2}},"text":["Hour: 0:00<br>Orders: 9,083<br>Percentage: 0.7%","Hour: 1:00<br>Orders: 5,626<br>Percentage: 0.4%","Hour: 2:00<br>Orders: 3,226<br>Percentage: 0.2%","Hour: 3:00<br>Orders: 2,438<br>Percentage: 0.2%","Hour: 4:00<br>Orders: 2,431<br>Percentage: 0.2%","Hour: 5:00<br>Orders: 3,847<br>Percentage: 0.3%","Hour: 6:00<br>Orders: 11,847<br>Percentage: 0.9%","Hour: 7:00<br>Orders: 36,302<br>Percentage: 2.6%","Hour: 8:00<br>Orders: 67,386<br>Percentage: 4.9%","Hour: 9:00<br>Orders: 93,856<br>Percentage: 6.8%","Hour: 10:00<br>Orders: 110,479<br>Percentage: 8%","Hour: 11:00<br>Orders: 114,119<br>Percentage: 8.2%","Hour: 12:00<br>Orders: 111,752<br>Percentage: 8.1%","Hour: 13:00<br>Orders: 114,762<br>Percentage: 8.3%","Hour: 14:00<br>Orders: 119,370<br>Percentage: 8.6%","Hour: 15:00<br>Orders: 116,198<br>Percentage: 8.4%","Hour: 16:00<br>Orders: 110,237<br>Percentage: 8%","Hour: 17:00<br>Orders: 96,944<br>Percentage: 7%","Hour: 18:00<br>Orders: 76,522<br>Percentage: 5.5%","Hour: 19:00<br>Orders: 58,175<br>Percentage: 4.2%","Hour: 20:00<br>Orders: 40,920<br>Percentage: 3%","Hour: 21:00<br>Orders: 34,813<br>Percentage: 2.5%","Hour: 22:00<br>Orders: 27,319<br>Percentage: 2%","Hour: 23:00<br>Orders: 16,965<br>Percentage: 1.2%"],"hovertemplate":["%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>"],"type":"scatter","error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="weekly-order-pattern-on-instacart" class="section level3">
+<h3>Weekly Order Pattern on Instacart</h3>
+<pre class="r"><code>weekly_orders =
+  instacart_df |&gt;
+  count(order_day_name) |&gt;
+  mutate(
+    pct_of_total = round(n / sum(n) * 100, 1),
+    # Reorder days from Monday to Sunday
+    order_day_name = factor(
+      order_day_name,
+      levels = c(&quot;Monday&quot;, &quot;Tuesday&quot;, &quot;Wednesday&quot;, &quot;Thursday&quot;, 
+                 &quot;Friday&quot;, &quot;Saturday&quot;, &quot;Sunday&quot;)
+    )
+  ) |&gt;
+  arrange(order_day_name) |&gt;
+  plot_ly(
+    x = ~order_day_name,
+    y = ~n,
+    type = &quot;scatter&quot;,
+    mode = &quot;lines+markers&quot;,
+    line = list(
+      color = &quot;#2ca02c&quot;,
+      width = 4
+    ),
+    marker = list(
+      size = 12,
+      color = &quot;#2ca02c&quot;,
+      symbol = &quot;circle&quot;,
+      line = list(color = &quot;white&quot;, width = 2)
+    ),
+    text = ~paste0(
+      &quot;&lt;b&gt;&quot;, order_day_name, &quot;&lt;/b&gt;&lt;br&gt;&quot;,
+      &quot;Orders: &quot;, scales::comma(n), &quot;&lt;br&gt;&quot;,
+      &quot;Percentage: &quot;, pct_of_total, &quot;%&quot;
+    ),
+    hovertemplate = &quot;%{text}&lt;extra&gt;&lt;/extra&gt;&quot;
+  ) |&gt;
+  layout(
+    title = list(
+      text = &quot;&lt;b&gt;Weekly Order Pattern on Instacart&lt;/b&gt;&lt;br&gt;&lt;sub&gt;Monday to Sunday shopping trends&lt;/sub&gt;&quot;,
+      font = list(size = 16)
+    ),
+    xaxis = list(
+      title = &quot;Day of Week&quot;,
+      titlefont = list(size = 14),
+      tickangle = 0
+    ),
+    yaxis = list(
+      title = &quot;Number of Orders&quot;,
+      titlefont = list(size = 14),
+      gridcolor = &quot;#E5E5E5&quot;,
+      tickformat = &quot;,&quot;
+    ),
+    plot_bgcolor = &quot;#FAFAFA&quot;,
+    paper_bgcolor = &quot;white&quot;,
+    margin = list(l = 80, r = 50, t = 100, b = 80),
+    hovermode = &quot;x unified&quot;
+  )
+
+weekly_orders</code></pre>
+<div class="plotly html-widget html-fill-item" id="htmlwidget-3f497786561ab0cba7a5" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-3f497786561ab0cba7a5">{"x":{"visdat":{"549472b37c8":["function () ","plotlyVisDat"]},"cur_data":"549472b37c8","attrs":{"549472b37c8":{"x":{},"y":{},"mode":"lines+markers","line":{"color":"#2ca02c","width":4},"marker":{"size":12,"color":"#2ca02c","symbol":"circle","line":{"color":"white","width":2}},"text":{},"hovertemplate":"%{text}<extra><\/extra>","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":80,"l":80,"t":100,"r":50},"title":{"text":"<b>Weekly Order Pattern on Instacart<\/b><br><sub>Monday to Sunday shopping trends<\/sub>","font":{"size":16}},"xaxis":{"domain":[0,1],"automargin":true,"title":"Day of Week","titlefont":{"size":14},"tickangle":0,"type":"category","categoryorder":"array","categoryarray":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"Number of Orders","titlefont":{"size":14},"gridcolor":"#E5E5E5","tickformat":","},"plot_bgcolor":"#FAFAFA","paper_bgcolor":"white","hovermode":"x unified","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],"y":[205978,160562,154381,155481,176910,207279,324026],"mode":"lines+markers","line":{"color":"#2ca02c","width":4},"marker":{"color":"#2ca02c","size":12,"symbol":"circle","line":{"color":"white","width":2}},"text":["<b>Monday<\/b><br>Orders: 205,978<br>Percentage: 14.9%","<b>Tuesday<\/b><br>Orders: 160,562<br>Percentage: 11.6%","<b>Wednesday<\/b><br>Orders: 154,381<br>Percentage: 11.1%","<b>Thursday<\/b><br>Orders: 155,481<br>Percentage: 11.2%","<b>Friday<\/b><br>Orders: 176,910<br>Percentage: 12.8%","<b>Saturday<\/b><br>Orders: 207,279<br>Percentage: 15%","<b>Sunday<\/b><br>Orders: 324,026<br>Percentage: 23.4%"],"hovertemplate":["%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>"],"type":"scatter","error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
