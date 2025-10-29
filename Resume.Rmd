@@ -7,4 +7,4 @@ output:
     theme: flatly
 ---
 
-![](Linqi Chu-CV.pdf)
+<embed src="Linqi Chu-CV.pdf" width="100%" height="800px" type="application/pdf">
