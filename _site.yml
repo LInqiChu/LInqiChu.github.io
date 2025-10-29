@@ -3,14 +3,14 @@ output_dir: "."
 navbar:
   title: "Home"
   right:
-    - text: "About"
-      href: About.html
+    - text: "Resume"
+      href: "Resume.html"
     - icon: fa-envelope fa-lg
       href: "mailto:you@youremail.com"
     - icon: fa-github fa-lg
       href: "http://github.com/LInqiChu"
     - icon: fa-linkedin fa-lg
-      href: "http://github.com/LInqiChu"
+      href: "www.linkedin.com/in/linqi-chu-760180381"
 
 output:
   html_document:
