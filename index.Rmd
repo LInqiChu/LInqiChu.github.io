@@ -23,10 +23,10 @@ Let's connect: chulinqi42@gmail.com
 
 # About Me
 
-Click on the link to learn more about me!
+Click on the link to learn more about me!<br>
 [About Me](About.html)
 
 # Visualization Dashboard
 
-Here is a dashboard I made myself!
+Here is a dashboard I made myself!<br>
 [Dashboard](dashboard.html)
