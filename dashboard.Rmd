@@ -89,15 +89,6 @@ Column {data-width=650}
 
 
 
-条形图 (Bar Plot)
-
-最受欢迎的产品: Top20最常购买的商品
-最受欢迎的通道(aisle)或部门:按订单数量排序
-
-散点图 (Scatter Plot)
-
-订购时间 vs部门:X轴为订购小时，Y轴为部门，点的大小表示订单数量
-订购时间 vs重新订购率:探索一天中不同时间段的重新订购行为
 
 
 
@@ -118,29 +109,187 @@ top20_products =
   mutate(
      product_name = fct_reorder(product_name, n)
      ) |>
-  plot_ly(x = ~n, y = ~product_name, type = "bar", colors = "viridis")
+  plot_ly(
+    x = ~n,
+    y = ~product_name, 
+    type = "bar", 
+    orientation = "h",
+    marker = list(
+      color = ~n,
+      colorscale = list(
+        c(0, "#FEF0D9"),
+        c(0.5, "#FD8D3C"),
+        c(1, "#D94701")
+      ),
+      line = list(color = "#8B4513", width = 1)
+    ),
+    text = ~paste0(product_name, "<br>Orders: ", n),
+    hovertemplate = "<b>%{y}</b><br>Total Orders: %{x:,}<extra></extra>"
+) |>
+    layout(
+      title = list(
+        text = "<b>Top 20 Most Popular Products on Instacart</b>",
+        font = list(size = 18)
+      ),
+      xaxis = list(
+        title = "Number of Orders",
+        titlefont = list(size = 14),
+        gridcolor = "#E5E5E5"
+      ),
+      yaxis = list(
+        title = "",
+        titlefont = list(size = 14),
+        tickfont = list(size = 11)
+      ),
+      plot_bgcolor = "#FAFAFA",
+      paper_bgcolor = "white",
+      margin = list(l = 200, r = 50, t = 80, b = 60),
+      hovermode = "closest"
+    )
 
+top20_products
 ```
-
-
-
-
-
 
 
 Column {data-width=350}
 -----------------------------------------------------------------------
 
-### Chart B
+### Order Time vs Department
 
 ```{r}
+time_dept_data =
+  instacart_df |>
+  count(order_hour_of_day, department) |>
+  group_by(department) |>
+  mutate(
+    dept_total = sum(n),
+    pct_of_dept = round(n / dept_total * 100, 1)
+  ) |>
+  ungroup()
 
+scatterplot1 = 
+  time_dept_data |>
+  plot_ly(
+    x = ~order_hour_of_day,
+    y = ~department,
+    color = ~department,
+    type = "scatter",
+    mode = "markers",
+    size = ~ n,
+    sizes = c(10, 500),
+    marker = list(
+      opacity = 0.7
+    ),
+    text = ~paste0(
+      "<b>", department, "</b><br>",
+      "Hour: ", order_hour_of_day, ":00<br>",
+      "Orders: ", scales::comma(n), "<br>",
+      "% of dept: ", pct_of_dept, "%"
+    ),
+    hovertemplate = "%{text}<extra></extra>"
+  ) |>
+  layout(
+    title = list(
+      text = "<b>Order Patterns: Time of Day vs Department</b><br><sub>Bubble size represents order volume</sub>",
+      font = list(size = 16)
+    ),
+    xaxis = list(
+      title = "Hour of Day (0-23)",
+      titlefont = list(size = 14),
+      tickmode = "linear",
+      tick0 = 0,
+      dtick = 2
+    ),
+    yaxis = list(
+      title = "Department",
+      titlefont = list(size = 14),
+      tickfont = list(size = 11),
+      categoryorder = "total ascending"
+    )
+  )
+
+scatterplot1
 ```
 
-### Chart C
+### 24-Hour Order Trend on Instacart
 
 ```{r}
+hourly_orders =
+  instacart_df |>
+  count(order_hour_of_day) |>
+  mutate(
+    pct_of_total = round(n / sum(n) * 100, 1)
+  ) |>
+  plot_ly(
+    x = ~order_hour_of_day,
+    y = ~n,
+    type = "scatter",
+    mode = "lines+markers",
+    line = list(
+      color = "#1f77b4",
+      width = 3
+    ),
+    marker = list(
+      size = 8,
+      color = "#1f77b4",
+      line = list(color = "white", width = 2)
+    ),
+    text = ~paste0(
+      "Hour: ", order_hour_of_day, ":00<br>",
+      "Orders: ", scales::comma(n), "<br>",
+      "Percentage: ", pct_of_total, "%"
+    ),
+    hovertemplate = "%{text}<extra></extra>"
+  ) |>
+  layout(
+    title = list(
+      text = "<b>24-Hour Order Trend on Instacart</b><br><sub>Shopping patterns throughout the day</sub>",
+      font = list(size = 16)
+    ),
+    xaxis = list(
+      title = "Hour of Day",
+      titlefont = list(size = 14),
+      tickmode = "linear",
+      tick0 = 0,
+      dtick = 2,
+      range = c(-0.5, 23.5),
+      gridcolor = "#E5E5E5"
+    ),
+    yaxis = list(
+      title = "Number of Orders",
+      titlefont = list(size = 14),
+      gridcolor = "#E5E5E5",
+      tickformat = ","
+    ),
+    plot_bgcolor = "#FAFAFA",
+    paper_bgcolor = "white",
+    margin = list(l = 80, r = 50, t = 100, b = 60),
+    hovermode = "x unified",
+    shapes = list(
+      # Adding a shaded area for peak hours
+      list(
+        type = "rect",
+        x0 = 10, x1 = 16.5,
+        y0 = 0, y1 = 1,
+        yref = "paper",
+        fillcolor = "rgba(255, 165, 0, 0.1)",
+        line = list(width = 0),
+        layer = "below"
+      )
+    ),
+    annotations = list(
+      list(
+        x = 13,
+        y = 1.05,
+        yref = "paper",
+        text = "Peak Hours",
+        showarrow = FALSE,
+        font = list(size = 11, color = "#FF8C00")
+      )
+    )
+  )
 
+hourly_orders
 ```
 
 
